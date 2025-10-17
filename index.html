@@ -23,7 +23,7 @@
     h1.title { font-size: clamp(34px, 5.4vw, 56px); font-weight: 800; line-height: 1.06; margin: 0 0 10px; color: var(--fg); /* black text */ -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 100%); mask-image: linear-gradient(90deg, #000 0%, #000 100%); -webkit-mask-size: 0% 100%; mask-size: 0% 100%; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; animation: textWipe 1s ease-out forwards; }
     .subtitle { font-size: 16px; color: var(--muted); font-weight: 600; margin-bottom: 16px; }
     .authors{ display:flex; flex-wrap:wrap; justify-content:center; column-gap:12px; row-gap:12px; margin:16px 0; }
-    .author-chip{ display:inline-flex; align-items:center; gap:6px; padding:0 2px; border-radius:0; background:transparent; border:none; box-shadow:none; font-size:0.98rem; }
+    .author-chip{ display:inline-flex; align-items:center; gap:6px; padding:0 2px; border-radius:0; background:transparent; border:none; box-shadow:none; font-size:1.08rem; }
     .author-chip a{ color:#2563eb; text-decoration:none; font-weight:600; }
     .author-chip sup{ font-size:.7em; color:#6b7280; }
     .authors a:hover{ text-decoration:underline; }
@@ -41,8 +41,8 @@
     .keywords { display: flex; flex-wrap: wrap; column-gap: 12px; row-gap: 12px; }
     .chip { background: #ffffff; color: #111827; border: 1px solid #e5e7eb; padding: 6px 12px; border-radius: 999px; font-weight: 600; font-size: 0.95rem; box-shadow: 0 1px 4px rgba(0,0,0,0.04);} .chip::before{content:""; display:inline-block; width:6px; height:6px; border-radius:50%; background:#2563eb; margin-right:8px; vertical-align:middle;}
 
-    .grid { display: grid; gap: 14px; margin-top: 16px; }
-    @media(min-width:900px){ .grid { grid-template-columns: 1fr 1fr; } }
+    .grid { display: grid; gap: 16px; margin-top: 16px; grid-template-columns: 1fr; }
+
 
     .teaser { background: #f8fafc; border: 1px dashed #d1d5db; border-radius: 14px; color: #6b7280; height: 200px; display: flex; align-items: center; justify-content: center; font-weight: 600; }
 
@@ -117,15 +117,12 @@
       </div>
       
       
-      <div class="scroll-cue"><a class="scroll-link" href="#abstract">Scroll for more<div class="chev"></div></a></div>
+      <div class="scroll-cue"><a class="scroll-link" href="#content-start">(scroll more) <div class="chev"></div></a></div></a></div>
     </header>
 
-    <div class="spacer"></div>
+    <div id="content-start" class="spacer"></div>
 
-    <section id="abstract">
-      <h2>Abstract</h2>
-      <p>Abstract text</p>
-    </section>
+    
 
     
 
