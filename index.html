@@ -34,7 +34,7 @@
     }
 
     /* Title */
-    h1.title { font-size: clamp(30px, 4.5vw, 48px); font-weight: 800; line-height: 1.1; margin: 0 0 12px; color: var(--fg); }
+    h1.title { font-size: clamp(32px, 4.8vw, 52px); font-weight: 800; line-height: 1.1; margin: 0 0 12px; color: var(--fg); }
 
     /* Header card wraps title + authors */
     .header-card {
@@ -67,8 +67,8 @@
 
     /* Video + Summary */
     .grid { display: grid; grid-template-columns: 1fr; gap: 24px; margin-top: 32px; width: 100%; }
-    .teaser { display:block; }
-    .teaser video{ width:100%; height:auto; aspect-ratio:16/9; border-radius:12px; object-fit:cover; }
+    .teaser { display:flex; justify-content:center; }
+    .teaser video{ width:82%; max-width:960px; height:auto; aspect-ratio:16/9; border-radius:12px; object-fit:cover; }
 
     .summary-box { background: #fafafa; border: 1px solid #e5e7eb; border-left: 6px solid #2563eb; padding: 16px 18px; border-radius: 12px; font-weight: 600; color: #111827; box-shadow: 0 2px 10px rgba(0,0,0,0.04); display: flex; align-items: flex-start; gap: 12px; }
     .summary-box svg { flex: 0 0 18px; margin-top: 2px; color: #2563eb; }
