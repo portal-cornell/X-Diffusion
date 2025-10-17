@@ -77,13 +77,13 @@
     .seal img { width: 68px; height: auto; display: block; margin: 0 auto; filter: drop-shadow(0 2px 6px rgba(0,0,0,.08)); }
 
     /* CTA (no box) */
-    .cta { display: flex; justify-content: center; flex-wrap: wrap; gap: 16px; margin-top: 18px; }
+    .cta { display: flex; justify-content: center; flex-wrap: wrap; gap: 16px; margin-top: 18px; margin-bottom: 10px; }
     .btn { display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; border-radius: 999px; border: 1px solid #e5e7eb; background: #1f2937; color: #fff; font-weight: 600; text-decoration: none; box-shadow: 0 2px 10px rgba(0,0,0,0.12); transition: transform .15s ease, box-shadow .15s ease, background-color .15s ease; }
     .btn.secondary { background: #fff; color: var(--fg); }
     .btn:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,0,0,0.12); }
 
     /* Teaser above summary */
-    .grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 16px; width: 100%; }
+    .grid { display: grid; grid-template-columns: 1fr; gap: 24px; margin-top: 32px; width: 100%; } @media (min-width: 900px){ .grid{ grid-template-columns: 1fr 1fr; align-items: stretch; } }
     .teaser { background: rgba(255,255,255,0.6); border: 1px dashed #d1d5db; border-radius: 14px; color: #6b7280; height: 200px; display: flex; align-items: center; justify-content: center; font-weight: 600; padding: 8px; }
     .teaser img { max-width: 100%; max-height: 150px; border-radius: 12px; object-fit: cover; cursor: pointer; }
 
@@ -147,25 +147,26 @@
         <a class="btn" href="https://github.com/ORG/REPO" target="_blank" rel="noopener">💻 Code</a>
       </nav>
 
-      <!-- Teaser then Summary (stacked) -->
+      <!-- Summary + Teaser in one row on desktop -->
       <div class="grid">
-        <div class="teaser">
-          <img id="teaser-img" src="teaser.jpg" alt="Teaser" />
+        <!-- Teaser first -->
+        <div class="teaser" style="display:flex; align-items:center; justify-content:center;">
+          <img id="teaser-img" src="teaser.jpg" alt="Teaser" style="max-width:100%; max-height:180px; border-radius:12px; object-fit:cover; cursor:pointer;" />
         </div>
-        <div style="display:flex; align-items:center; justify-content:center;">
-          <div style="text-align:left; max-width:560px; width:100%;">
-            <div class="summary-box">
+        <!-- Summary second -->
+        <div style="display:flex; align-items:stretch;">
+          <div style="width:100%; display:flex;">
+            <div class="summary-box" style="width:100%;">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
               <div class="summary-text">Summary</div>
             </div>
           </div>
         </div>
       </div>
-
-      <!-- Fixed scroll cue at bottom of first page -->
+      <!-- Fixed scroll cue -->
       <div class="scroll-cue">
         <a class="scroll-link" href="#content-start" aria-label="Scroll to content">
-          <span>Scroll more</span>
+          <span>Scroll for more</span>
           <div class="chev-wrap">
             <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <polyline points="6 9 12 15 18 9"></polyline>
