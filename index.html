@@ -1,47 +1,161 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>X-Diffusion: Training Diffusion Policies on Cross-Embodiment Human Demonstrations</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>X-Diffusion — Project Page</title>
+  <meta name="description" content="X-Diffusion: Training Diffusion Policies on Cross-Embodiment Human Demonstrations." />
   <style>
-    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;line-height:1.6;color:#111}
-    .wrap{max-width:900px;margin:0 auto;padding:40px 20px}
-    h1{margin:0 0 6px;text-align:center;font-weight:800}
-    .subtitle{margin:0 0 14px;text-align:center;color:#444}
-    .authors,.affils,.notes{text-align:center}
-    .authors a{color:#0b5;text-decoration:none}
-    sup{font-size:.7em}
-    .badges{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:18px 0}
-    .btn{padding:8px 14px;border:1px solid #e5e5e5;border-radius:999px;text-decoration:none;color:#111}
-    .btn[disabled]{opacity:.5;pointer-events:none}
-    hr{border:none;border-top:1px solid #eee;margin:24px 0}
+    :root {
+      --bg: #f8fafc;     
+      --fg: #111827;     
+      --accent: #374151; 
+      --muted: #6b7280;   
+      --card: #ffffff;
+      --radius: 20px;
+      --shadow: 0 8px 24px rgba(0,0,0,0.08);
+      --maxw: 1100px;
+    }
+    body { margin: 0; font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial; background: var(--bg); color: var(--fg); line-height: 1.75; }
+    .wrap { max-width: var(--maxw); margin: 0 auto; padding: 40px 20px; }
+    .hero { background: linear-gradient(180deg, #ffffff 0%, #eef2ff 100%); border-radius: var(--radius); box-shadow: var(--shadow); padding: 48px 28px; text-align: center; }
+    h1.title { font-size: clamp(32px, 5vw, 54px); font-weight: 800; line-height: 1.1; margin: 0 0 10px; color: var(--fg); }
+    .subtitle { font-size: 18px; color: var(--muted); font-weight: 600; margin-bottom: 20px; }
+    .authors{ display:flex; flex-wrap:wrap; justify-content:center; column-gap:12px; row-gap:12px; margin:16px 0; }
+    .author-chip{ display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:999px; background:#ffffff; border:1px solid #e5e7eb; box-shadow:0 1px 4px rgba(0,0,0,.04); font-size:1.02rem; }
+    .author-chip a{ color:#2563eb; text-decoration:none; font-weight:600; }
+    .author-chip sup{ font-size:.7em; color:#6b7280; }
+    .authors a:hover{ text-decoration:underline; }
+    .affil { color: var(--muted); margin-bottom: 10px; }
+    .seal img { width: 68px; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.08)); }
+
+    .cta { display: flex; justify-content: center; flex-wrap: wrap; gap: 16px; margin-top: 18px; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; border-radius: 999px; border: 1px solid #e5e7eb; background: #1f2937; color: #fff; font-weight: 600; text-decoration: none; box-shadow: 0 2px 10px rgba(0,0,0,0.12); transition: transform .15s ease, box-shadow .15s ease, background-color .15s ease; }
+    .btn.secondary { background: #fff; color: var(--fg); } .btn:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,0,0,0.12); } .btn:active { transform: translateY(0); box-shadow: 0 2px 10px rgba(0,0,0,0.12); } .btn:focus-visible { outline: 2px solid #93c5fd; outline-offset: 2px; }
+
+    /* One-sentence summary box */
+    .summary-box { background: #fafafa; border: 1px solid #e5e7eb; border-left: 6px solid #2563eb; padding: 16px 18px; border-radius: 12px; font-weight: 600; color: #111827; box-shadow: 0 2px 10px rgba(0,0,0,0.04); display:flex; align-items: flex-start; gap:12px; } .summary-box svg{flex:0 0 18px; margin-top:2px; color:#2563eb;} .summary-text{flex:1} 
+
+    /* Keywords chips */
+    .keywords { display: flex; flex-wrap: wrap; column-gap: 12px; row-gap: 12px; }
+    .chip { background: #ffffff; color: #111827; border: 1px solid #e5e7eb; padding: 6px 12px; border-radius: 999px; font-weight: 600; font-size: 0.95rem; box-shadow: 0 1px 4px rgba(0,0,0,0.04);} .chip::before{content:""; display:inline-block; width:6px; height:6px; border-radius:50%; background:#2563eb; margin-right:8px; vertical-align:middle;}
+
+    .grid { display: grid; gap: 14px; margin-top: 16px; }
+    @media(min-width:900px){ .grid { grid-template-columns: 1fr 1fr; } }
+
+    .teaser { background: #f8fafc; border: 1px dashed #d1d5db; border-radius: 14px; color: #6b7280; height: 200px; display: flex; align-items: center; justify-content: center; font-weight: 600; }
+
+    section { max-width: var(--maxw); margin: 26px auto; padding: 0 4px; }
+    section h2 { margin: 8px 0 12px; color: var(--accent); }
+    .spacer { height: 28px; }
+
+    footer { text-align: center; color: var(--muted); margin-top: 36px; }
+  .cta-wrap{ background: transparent; border:none; padding:0; border-radius:0; margin-top:12px; }
+    .scroll-cue{ margin-top:22px; color: var(--muted); font-size:.95rem; display:flex; flex-direction:column; align-items:center; gap:6px; transition: opacity .25s ease, transform .25s ease; } .scroll-cue.hidden{ opacity:0; transform: translateY(-6px); }
+    .chev{ width:20px; height:20px; border-right:2px solid #6b7280; border-bottom:2px solid #6b7280; transform:rotate(45deg); animation:bounce 1.4s infinite ease-in-out; }
+    @keyframes bounce{ 0%{ transform:translateY(0) rotate(45deg);} 35%{ transform:translateY(8px) rotate(45deg);} 70%{ transform:translateY(0) rotate(45deg);} 100%{ transform:translateY(0) rotate(45deg);} } @media (prefers-reduced-motion: reduce){ .chev{ animation:none; } }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <h1>X-Diffusion</h1>
-    <p class="subtitle"><b>Training Diffusion Policies on Cross-Embodiment Human Demonstrations</b></p>
+    <header class="hero">
+      <h1 class="title">X‑Diffusion: Training Diffusion Policies on Cross‑Embodiment Human Demonstrations</h1>
+      <div class="subtitle">Project Preview · Preprint Coming Soon</div>
 
-    <p class="authors">
-      <a href="#">Maximus A. Pace</a>,
-      <a href="#">Prithwish Dan</a>,
-      <a href="#">Chuanruo Ning</a>,
-      <a href="#">Atiksh Bhardwaj</a>,
-      <a href="#">Audrey Du</a>,
-      <a href="#">Edward W. Duan</a>,
-      <a href="#">Wei-Chiu Ma</a><sup>†</sup>,
-      <a href="#">Kushal Kedia</a><sup>†</sup>
-    </p>
-    <p class="affils">Cornell University</p>
-    <p class="notes"><small>† Corresponding author(s)</small></p>
+      <div class="authors">
+        <span class="author-chip"><a href="#">Maximus A. Pace</a></span>
+        <span class="author-chip"><a href="#">Prithwish Dan</a></span>
+        <span class="author-chip"><a href="#">Chuanruo Ning</a></span>
+        <span class="author-chip"><a href="#">Atiksh Bhardwaj</a></span>
+        <span class="author-chip"><a href="#">Audrey Du</a></span>
+        <span class="author-chip"><a href="#">Edward W. Duan</a></span>
+        <span class="author-chip"><a href="#">Wei‑Chiu Ma</a><sup>†</sup></span>
+        <span class="author-chip"><a href="#">Kushal Kedia</a><sup>†</sup></span>
+      </div>
+      <p class="affil">Cornell University</p>
+      <div class="seal"><img src="cornell-seal.png" alt="Cornell University" /></div>
 
-    <div class="badges">
-      <a class="btn" href="#" disabled>Paper (coming soon)</a>
-      <a class="btn" href="#" disabled>Code</a>
-    </div>
+      <div class="cta-wrap"><nav class="cta">
+        <a class="btn" href="#" disabled>📄 Paper</a>
+        <a class="btn secondary" href="#" disabled>🧠 arXiv</a>
+        <a class="btn" href="https://github.com/ORG/REPO">💻 Code</a>
+      </nav></div>
 
-    <hr>
+      <div class="grid" style="row-gap:22px;">
+        <!-- One-sentence summary comes first -->
+        <div style="display:flex;align-items:center;justify-content:center;">
+          <div style="text-align:left; max-width:560px; width:100%;">
+            <div class="summary-box"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><div class="summary-text">One-sentence summary</div></div>
+          </div>
+        </div>
+        <!-- Teaser image second -->
+        <div>
+          <div class="teaser" style="padding:8px;">
+            <img id="teaser-img" src="teaser.jpg" alt="Teaser" style="max-width:100%; max-height:184px; border-radius:12px; object-fit:cover; cursor:pointer;" />
+          </div>
+        </div>
+      </div>
+      <!-- Keywords after the image -->
+      <div class="keywords" style="margin-top:18px; justify-content:center;" >
+        <span class="chip">Keyword</span>
+        <span class="chip">Keyword</span>
+        <span class="chip">Keyword</span>
+        <span class="chip">Keyword</span>
+      </div>
+
+      <div class="scroll-cue">Scroll for more<div class="chev"></div></div>
+    </header>
+
+    <div class="spacer"></div>
+
+    <section id="abstract">
+      <h2>Abstract</h2>
+      <p>Abstract text</p>
+    </section>
+
+    <section id="keywords" style="margin-top:34px;">
+      <h2>Keywords</h2>
+      <div class="keywords">
+        <span class="chip">Keyword</span>
+        <span class="chip">Keyword</span>
+        <span class="chip">Keyword</span>
+        <span class="chip">Keyword</span>
+      </div>
+    </section>
+
+    <footer>
+      <small>* equal contribution · † corresponding author(s)</small>
+      <br><small>© 2025 X‑Diffusion Authors</small>
+    </footer>
   </div>
+  <!-- Lightbox modal -->
+  <div id="lightbox" style="position:fixed; inset:0; background:rgba(0,0,0,.6); display:none; align-items:center; justify-content:center; z-index:50;">
+    <img id="lightbox-img" src="teaser.jpg" alt="Teaser" style="max-width:92vw; max-height:90vh; border-radius:14px; box-shadow:0 12px 40px rgba(0,0,0,.4);" />
+  </div>
+  <script>
+    // Fade out the scroll cue after user starts scrolling
+    (function(){
+      const cue = document.querySelector('.scroll-cue');
+      function onScroll(){
+        const y = window.scrollY || document.documentElement.scrollTop;
+        if(!cue) return;
+        if(y > 40 && !cue.classList.contains('hidden')) cue.classList.add('hidden');
+        if(y <= 10 && cue.classList.contains('hidden')) cue.classList.remove('hidden');
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+    })();
+
+    // Teaser lightbox (no library)
+    (function(){
+      const teaser = document.getElementById('teaser-img');
+      const lb = document.getElementById('lightbox');
+      const lbimg = document.getElementById('lightbox-img');
+      if(teaser && lb && lbimg){
+        teaser.addEventListener('click', function(){ lbimg.src = teaser.src; lb.style.display = 'flex'; });
+        lb.addEventListener('click', function(){ lb.style.display = 'none'; });
+        document.addEventListener('keydown', function(e){ if(e.key === 'Escape'){ lb.style.display = 'none'; }});
+      }
+    })();
+  </script>
 </body>
 </html>
