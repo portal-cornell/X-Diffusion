@@ -3,91 +3,127 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>X-Diffusion — Project Page</title>
-  <meta name="description" content="X-Diffusion: Training Diffusion Policies on Cross-Embodiment Human Demonstrations." />
+  <title>X‑Diffusion — Project Page</title>
+  <meta name="description" content="X‑Diffusion: Training Diffusion Policies on Cross‑Embodiment Human Demonstrations." />
   <style>
     :root {
-      --bg: #f8fafc;      /* neutral background */
-      --fg: #111827;      /* slate-900 */
-      --accent: #374151;  /* slate-700 */
-      --muted: #6b7280;   /* slate-500 */
-      --card: #ffffff;
-      --radius: 20px;
-      --shadow: 0 8px 24px rgba(0,0,0,0.08);
-      --maxw: 1100px;
+      --bg-start: #ffffff;         /* page gradient start */
+      --bg-end:   #eef2ff;         /* page gradient end */
+      --fg:       #111827;         /* text color */
+      --muted:    #6b7280;         /* secondary text */
+      --card:     #ffffff;         /* card background */
+      --radius:   16px;            /* rounded corners */
+      --shadow:   0 8px 24px rgba(0,0,0,0.08);
+      --maxw:     1100px;
       scroll-behavior: smooth;
     }
-    body{ margin:0; font-family:'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial; background:var(--bg); color:var(--fg); line-height:1.75; }
-    .wrap{ max-width:var(--maxw); margin:0 auto; padding:40px 20px; }
-    .hero{ background:linear-gradient(180deg, #ffffff 0%, #eef2ff 100%); border-radius:var(--radius); box-shadow:var(--shadow); padding:36px 24px 64px; text-align:center; position:relative; }
 
-    /* Title: black text with mask-reveal + slight jump */
-    h1.title{ font-size:clamp(34px, 5.4vw, 56px); font-weight:800; line-height:1.06; margin:0 0 12px; color:var(--fg);
-      -webkit-mask-image:linear-gradient(90deg,#000 0%,#000 100%); mask-image:linear-gradient(90deg,#000 0%,#000 100%);
-      -webkit-mask-size:0% 100%; mask-size:0% 100%; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; animation:textWipe 1s ease-out forwards; }
+    /* Page */
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;
+      color: var(--fg);
+      line-height: 1.75;
+      background: linear-gradient(180deg, var(--bg-start) 0%, var(--bg-end) 100%);
+      background-attachment: fixed; /* make gradient cover whole page */
+    }
+    .wrap { max-width: var(--maxw); margin: 0 auto; padding: 40px 20px; }
 
-    /* Authors (boxed as a whole) */
-    .header-card{ display:inline-block; padding:18px 20px; border:1px solid #e5e7eb; border-radius:16px; background:linear-gradient(180deg,#fff,#f7f9fc); box-shadow:0 2px 10px rgba(0,0,0,.06); margin:0 auto 28px; } .header-card .title{ margin-bottom:10px; }
-    .authors-group{ display:flex; flex-direction:column; align-items:center; gap:8px; }
-    .authors-row{ display:flex; flex-wrap:wrap; justify-content:center; gap:10px; }
-    .author-chip{ display:inline-flex; align-items:center; gap:6px; padding:0 2px; border:none; background:transparent; font-size:1.12rem; }
-    .author-chip a{ color:#2563eb; text-decoration:none; font-weight:600; }
-    .author-chip a:hover{ text-decoration:underline; }
-    .author-chip sup{ font-size:.7em; color:#6b7280; }
+    /* Hero */
+    .hero {
+      min-height: 86vh;            /* so first page feels full */
+      display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+      text-align: center;
+    }
 
-    /* School logo with extra spacing above */
-    .seal{ margin-top: 28px; }
-    .seal img{ width:68px; filter:drop-shadow(0 2px 6px rgba(0,0,0,0.08)); }
+    /* Title — black with mask reveal */
+    h1.title {
+      font-size: clamp(34px, 5.4vw, 56px);
+      font-weight: 800;
+      line-height: 1.06;
+      margin: 0 0 12px;
+      color: var(--fg);
+      -webkit-mask-image: linear-gradient(90deg,#000 0%,#000 100%);
+      mask-image: linear-gradient(90deg,#000 0%,#000 100%);
+      -webkit-mask-size: 0% 100%;
+      mask-size: 0% 100%;
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      animation: textWipe 0.9s ease-out forwards;
+    }
 
-    /* CTA (Paper / arXiv / Code) boxed as a whole */
-    .cta-card{ display:inline-block; padding:12px; border:1px solid #e5e7eb; border-radius:14px; background:linear-gradient(180deg,#fff,#f8fafc);
-      box-shadow:0 2px 10px rgba(0,0,0,0.06); margin-top:18px; }
-    .cta{ display:flex; justify-content:center; flex-wrap:wrap; gap:16px; }
-    .btn{ display:inline-flex; align-items:center; gap:8px; padding:9px 14px; border-radius:999px; border:1px solid #e5e7eb; background:#1f2937; color:#fff; font-weight:600; text-decoration:none; box-shadow:0 2px 10px rgba(0,0,0,0.12); transition:transform .15s ease, box-shadow .15s ease, background-color .15s ease; }
-    .btn.secondary{ background:#fff; color:var(--fg); }
-    .btn:hover{ transform:translateY(-1px); box-shadow:0 6px 16px rgba(0,0,0,0.12); }
-    .btn:active{ transform:translateY(0); box-shadow:0 2px 10px rgba(0,0,0,0.12); }
-    .btn:focus-visible{ outline:2px solid #93c5fd; outline-offset:2px; }
+    /* Header card wraps title + authors only */
+    .header-card {
+      display: inline-block;
+      padding: 18px 20px;
+      border: 1px solid #e5e7eb;
+      border-radius: var(--radius);
+      background: linear-gradient(180deg,#fff,#f7f9fc);
+      box-shadow: var(--shadow);
+      margin: 0 auto 24px;
+    }
 
-    /* Grid stack: teaser above summary on all widths */
-    .grid{ display:grid; grid-template-columns:1fr; gap:16px; margin-top:16px; }
+    /* Authors */
+    .authors-group { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .authors-row   { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+    .author-chip   { display: inline-flex; align-items: center; gap: 6px; padding: 0 2px; font-size: 1.12rem; }
+    .author-chip a { color: #2563eb; text-decoration: none; font-weight: 600; }
+    .author-chip a:hover { text-decoration: underline; }
+    .author-chip sup { font-size: .7em; color: #6b7280; }
 
-    .teaser{ background:#f8fafc; border:1px dashed #d1d5db; border-radius:14px; color:#6b7280; height:200px; display:flex; align-items:center; justify-content:center; font-weight:600; padding:8px; }
-    .teaser img{ max-width:100%; max-height:150px; border-radius:12px; object-fit:cover; cursor:pointer; }
+    /* School logo directly under authors */
+    .seal { margin-top: 18px; }
+    .seal img { width: 68px; height: auto; display: block; margin: 0 auto; filter: drop-shadow(0 2px 6px rgba(0,0,0,.08)); }
 
-    /* Summary box */
-    .summary-box{ background:#fafafa; border:1px solid #e5e7eb; border-left:6px solid #2563eb; padding:16px 18px; border-radius:12px; font-weight:600; color:#111827; box-shadow:0 2px 10px rgba(0,0,0,0.04); display:flex; align-items:flex-start; gap:12px; }
-    .summary-box svg{ flex:0 0 18px; margin-top:2px; color:#2563eb; }
-    .summary-text{ flex:1; background:linear-gradient(90deg, #0f172a 0%, #2563eb 60%); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; background-size:0% 100%; animation:gradIn 1.1s ease forwards; animation-delay:.15s; }
+    /* CTA (no box) */
+    .cta { display: flex; justify-content: center; flex-wrap: wrap; gap: 16px; margin-top: 18px; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; border-radius: 999px; border: 1px solid #e5e7eb; background: #1f2937; color: #fff; font-weight: 600; text-decoration: none; box-shadow: 0 2px 10px rgba(0,0,0,0.12); transition: transform .15s ease, box-shadow .15s ease, background-color .15s ease; }
+    .btn.secondary { background: #fff; color: var(--fg); }
+    .btn:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,0,0,0.12); }
 
-    .spacer{ height:28px; }
-    footer{ text-align:center; color:var(--muted); margin-top:36px; }
+    /* Teaser above summary */
+    .grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 16px; width: 100%; }
+    .teaser { background: rgba(255,255,255,0.6); border: 1px dashed #d1d5db; border-radius: 14px; color: #6b7280; height: 200px; display: flex; align-items: center; justify-content: center; font-weight: 600; padding: 8px; }
+    .teaser img { max-width: 100%; max-height: 150px; border-radius: 12px; object-fit: cover; cursor: pointer; }
 
-    /* Scroll cue — always visible, centered at bottom */
-    .scroll-cue{ position:absolute; left:50%; bottom:14px; transform:translateX(-50%); color:var(--muted); font-size:.95rem; display:flex; align-items:center; gap:10px; font-weight:600; }
-    .scroll-link{ text-decoration:none; color:inherit; display:flex; align-items:center; gap:10px; cursor:pointer; }
-    .chev-wrap{ width:44px; height:44px; border-radius:999px; display:flex; align-items:center; justify-content:center; border:1.5px solid #d1d5db; background:linear-gradient(180deg,#fff,#f8fafc); box-shadow:0 2px 10px rgba(0,0,0,.06); animation:bounce 1.4s infinite ease-in-out; }
-    .chev{ width:18px; height:18px; stroke:#374151; }
+    /* Summary */
+    .summary-box { background: #fafafa; border: 1px solid #e5e7eb; border-left: 6px solid #2563eb; padding: 16px 18px; border-radius: 12px; font-weight: 600; color: #111827; box-shadow: 0 2px 10px rgba(0,0,0,0.04); display: flex; align-items: flex-start; gap: 12px; }
+    .summary-box svg { flex: 0 0 18px; margin-top: 2px; color: #2563eb; }
+    .summary-text { flex: 1; }
+
+    /* Scroll cue — fixed at bottom center of first page */
+    .scroll-cue {
+      position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%);
+      color: var(--muted); font-size: .95rem; font-weight: 600;
+      display: flex; align-items: center; gap: 10px;
+      z-index: 10;
+    }
+    .scroll-link { text-decoration: none; color: inherit; display: inline-flex; align-items: center; gap: 10px; cursor: pointer; }
+    .chev-wrap { width: 44px; height: 44px; border-radius: 999px; display: flex; align-items: center; justify-content: center; border: 1.5px solid #d1d5db; background: linear-gradient(180deg,#fff,#f8fafc); box-shadow: 0 2px 10px rgba(0,0,0,.06); animation: bounce 1.4s infinite ease-in-out; }
+    .chev { width: 18px; height: 18px; stroke: #374151; }
+
+    /* Footer */
+    .spacer { height: 28px; }
+    footer { text-align: center; color: var(--muted); margin-top: 36px; }
 
     /* Animations */
-    @keyframes textWipe{ 0%{ -webkit-mask-size:0% 100%; mask-size:0% 100%; transform:translateY(6px); opacity:.9; } 50%{ transform:translateY(-2px);} 100%{ -webkit-mask-size:100% 100%; mask-size:100% 100%; transform:translateY(0); opacity:1; } }
-    @keyframes gradIn{ 0%{ background-size:0% 100%; } 100%{ background-size:100% 100%; } }
-    @keyframes bounce{ 0%{ transform:translateY(0);} 40%{ transform:translateY(8px);} 80%{ transform:translateY(0);} 100%{ transform:translateY(0);} }
+    @keyframes textWipe { 0% { -webkit-mask-size: 0% 100%; mask-size: 0% 100%; transform: translateY(6px); opacity: .95; } 50% { transform: translateY(-2px); } 100% { -webkit-mask-size: 100% 100%; mask-size: 100% 100%; transform: translateY(0); opacity: 1; } }
+    @keyframes bounce { 0% { transform: translateY(0);} 40% { transform: translateY(8px);} 80% { transform: translateY(0);} 100% { transform: translateY(0);} }
 
-    @media (prefers-reduced-motion: reduce){
-      .title, .summary-text{ animation:none; -webkit-mask-size:100% 100%; mask-size:100% 100%; background-size:100% 100%; }
-      .chev-wrap{ animation:none; }
+    @media (prefers-reduced-motion: reduce) {
+      .title { animation: none; -webkit-mask-size: 100% 100%; mask-size: 100% 100%; }
+      .chev-wrap { animation: none; }
     }
   </style>
 </head>
 <body>
   <div class="wrap">
     <header class="hero">
+      <!-- Title + Authors in one framed header card -->
       <div class="header-card">
-      <h1 class="title">X‑Diffusion: Training Diffusion Policies on Cross‑Embodiment Human Demonstrations</h1>
-
-      <!-- Authors -->
-      <div class="authors-group">
+        <h1 class="title">X‑Diffusion: Training Diffusion Policies on Cross‑Embodiment Human Demonstrations</h1>
+        <div class="authors-group">
           <div class="authors-row">
             <span class="author-chip"><a href="#">Maximus A. Pace</a></span>
             <span class="author-chip"><a href="#">Prithwish Dan</a></span>
@@ -102,19 +138,18 @@
           </div>
         </div>
       </div>
-      </div>
 
-      <!-- School logo with extra spacing from authors -->
+      <!-- School logo: centered directly under authors -->
       <div class="seal"><img src="cornell-seal.png" alt="Cornell University" /></div>
 
-      <!-- CTA (boxed) -->
-      <nav class="cta">
-          <a class="btn" href="#" aria-disabled="true">📄 Paper</a>
-          <a class="btn secondary" href="#" aria-disabled="true">🧠 arXiv</a>
-          <a class="btn" href="https://github.com/ORG/REPO" target="_blank" rel="noopener">💻 Code</a>
-        </nav>
+      <!-- CTA buttons (no framing) -->
+      <nav class="cta" aria-label="Links">
+        <a class="btn" href="#" aria-disabled="true">📄 Paper</a>
+        <a class="btn secondary" href="#" aria-disabled="true">🧠 arXiv</a>
+        <a class="btn" href="https://github.com/ORG/REPO" target="_blank" rel="noopener">💻 Code</a>
+      </nav>
 
-      <!-- Teaser then Summary -->
+      <!-- Teaser then Summary (stacked) -->
       <div class="grid">
         <div class="teaser">
           <img id="teaser-img" src="teaser.jpg" alt="Teaser" />
@@ -129,7 +164,7 @@
         </div>
       </div>
 
-      <!-- Scroll cue (always visible) -->
+      <!-- Fixed scroll cue at bottom of first page -->
       <div class="scroll-cue">
         <a class="scroll-link" href="#content-start" aria-label="Scroll to content">
           <span>Scroll more</span>
