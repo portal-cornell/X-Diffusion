@@ -19,7 +19,7 @@
     }
 
     /* Page */
-    html, body { height: 100%; }
+    html, body { margin: 0; font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial; background: linear-gradient(to bottom left, #e8ecff 0%, #f8fafc 100%); color: var(--fg); line-height: 1.75; }
     body {
       margin: 0;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;
@@ -38,20 +38,7 @@
     }
 
     /* Title — black with mask reveal */
-    h1.title {
-      font-size: clamp(34px, 5.4vw, 56px);
-      font-weight: 800;
-      line-height: 1.06;
-      margin: 0 0 22px;
-      color: var(--fg);
-      -webkit-mask-image: linear-gradient(90deg,#000 0%,#000 100%);
-      mask-image: linear-gradient(90deg,#000 0%,#000 100%);
-      -webkit-mask-size: 0% 100%;
-      mask-size: 0% 100%;
-      -webkit-mask-repeat: no-repeat;
-      mask-repeat: no-repeat;
-      animation: textWipe 0.9s ease-out forwards;
-    }
+    h1.title { font-size: clamp(30px, 4.5vw, 48px); font-weight: 800; line-height: 1.1; margin: 0 0 10px; color: var(--fg); }
 
     /* Header card wraps title + authors only */
     .header-card {
@@ -84,7 +71,7 @@
 
     /* Teaser above summary */
     .grid { display: grid; grid-template-columns: 1fr; gap: 24px; margin-top: 32px; width: 100%; }
-    .teaser { background: rgba(255,255,255,0.6); border: 1px dashed #d1d5db; border-radius: 14px; color: #6b7280; height: 200px; display: flex; align-items: center; justify-content: center; font-weight: 600; padding: 8px; }
+    .teaser { background: #f8fafc; border: 1px dashed #d1d5db; border-radius: 14px; color: #6b7280; height: 240px; display: flex; align-items: center; justify-content: center; font-weight: 600; }
     .teaser img { max-width: 100%; max-height: 150px; border-radius: 12px; object-fit: cover; cursor: pointer; }
 
     /* Summary */
@@ -151,7 +138,7 @@
       <div class="grid">
         <!-- Teaser first -->
         <div class="teaser" style="display:flex; align-items:center; justify-content:center;">
-          <img id="teaser-img" src="teaser.jpg" alt="Teaser" style="max-width:100%; max-height:180px; border-radius:12px; object-fit:cover; cursor:pointer;" />
+          <img id="teaser-img" src="teaser.jpg" alt="Teaser" style="max-width:100%; max-height:220px; border-radius:12px; object-fit:cover; cursor:pointer;" />
         </div>
         <!-- Summary second -->
         <div style="display:flex; align-items:stretch;">
