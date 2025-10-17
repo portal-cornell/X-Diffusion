@@ -22,8 +22,10 @@
     .hero { background: linear-gradient(180deg, #ffffff 0%, #eef2ff 100%); border-radius: var(--radius); box-shadow: var(--shadow); padding: 36px 24px 56px; text-align: center; position: relative; }
     h1.title { font-size: clamp(34px, 5.4vw, 56px); font-weight: 800; line-height: 1.06; margin: 0 0 10px; color: var(--fg); /* black text */ -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 100%); mask-image: linear-gradient(90deg, #000 0%, #000 100%); -webkit-mask-size: 0% 100%; mask-size: 0% 100%; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; animation: textWipe 1s ease-out forwards; }
     .subtitle { font-size: 16px; color: var(--muted); font-weight: 600; margin-bottom: 16px; }
-    .authors{ display:flex; flex-wrap:wrap; justify-content:center; column-gap:12px; row-gap:12px; margin:16px 0; }
-    .author-chip{ display:inline-flex; align-items:center; gap:6px; padding:0 2px; border-radius:0; background:transparent; border:none; box-shadow:none; font-size:1.08rem; }
+    .authors{ display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin:10px 0; }
+    .authors-group{ display:flex; flex-direction:column; align-items:center; gap:8px; }
+    .authors-row{ display:flex; flex-wrap:wrap; justify-content:center; gap:10px; }
+    .author-chip{ display:inline-flex; align-items:center; gap:6px; padding:0 2px; border-radius:0; background:transparent; border:none; box-shadow:none; font-size:1.12rem; }
     .author-chip a{ color:#2563eb; text-decoration:none; font-weight:600; }
     .author-chip sup{ font-size:.7em; color:#6b7280; }
     .authors a:hover{ text-decoration:underline; }
@@ -43,7 +45,6 @@
 
     .grid { display: grid; gap: 16px; margin-top: 16px; grid-template-columns: 1fr; }
 
-
     .teaser { background: #f8fafc; border: 1px dashed #d1d5db; border-radius: 14px; color: #6b7280; height: 200px; display: flex; align-items: center; justify-content: center; font-weight: 600; }
 
     section { max-width: var(--maxw); margin: 26px auto; padding: 0 4px; }
@@ -52,11 +53,11 @@
 
     footer { text-align: center; color: var(--muted); margin-top: 36px; }
   .cta-wrap{ background: transparent; border:none; padding:0; border-radius:0; margin-top:12px; }
-    .scroll-cue{ position:absolute; left:50%; bottom:12px; transform:translateX(-50%); color: var(--muted); font-size:.95rem; display:flex; flex-direction:column; align-items:center; gap:6px; transition: opacity .25s ease, transform .25s ease; font-weight:600; } .scroll-cue.hidden{ opacity:0; transform: translate(-50%, -6px); }
-    .chev{ width:24px; height:24px; border-right:3px solid #374151; border-bottom:3px solid #374151; transform:rotate(45deg); animation:bounce 1.4s infinite ease-in-out; filter: drop-shadow(0 1px 1px rgba(0,0,0,.08)); }
-    @keyframes bounce{ 0%{ transform:translateY(0) rotate(45deg);} 35%{ transform:translateY(8px) rotate(45deg);} 70%{ transform:translateY(0) rotate(45deg);} 100%{ transform:translateY(0) rotate(45deg);} }
+    .scroll-cue{ position:absolute; left:50%; bottom:12px; transform:translateX(-50%); color: var(--muted); font-size:.95rem; display:flex; flex-direction:row; align-items:center; gap:8px; font-weight:600; }
+    .chev{ width:18px; height:18px; stroke:#374151; }
+    @keyframes bounce{ 0%{ transform: translateY(0);} 40%{ transform: translateY(8px);} 80%{ transform: translateY(0);} 100%{ transform: translateY(0);} } 40%{ transform: translateY(6px);} 80%{ transform: translateY(0);} 100%{ transform: translateY(0);} } 35%{ transform:translateY(8px) rotate(45deg);} 70%{ transform:translateY(0) rotate(45deg);} 100%{ transform:translateY(0) rotate(45deg);} }
     @keyframes bounceStrong{ 0%{ transform:translateY(0) rotate(45deg);} 25%{ transform:translateY(12px) rotate(45deg);} 50%{ transform:translateY(0) rotate(45deg);} 75%{ transform:translateY(14px) rotate(45deg);} 100%{ transform:translateY(0) rotate(45deg);} }
-    .scroll-link{ text-decoration:none; color:inherit; display:flex; align-items:center; gap:8px; cursor:pointer; }
+    .scroll-link{ text-decoration:none; color:inherit; display:flex; align-items:center; gap:10px; cursor:pointer; }
     .scroll-link:hover .chev{ animation:bounceStrong .9s infinite ease-in-out; }
     @media (prefers-reduced-motion: reduce){ .chev{ animation:none; } }
   @keyframes titleIn { 0% { opacity: 0; transform: translateY(6px);} 100% { opacity: 1; transform: translateY(0);} }
@@ -76,24 +77,30 @@
     @media (prefers-reduced-motion: reduce) { .title { animation: none; background-size: 100% 100%; } .summary-text, .authors .author-chip { animation: none !important; opacity: 1; transform: none; } }
   @keyframes textWipe { 0% { -webkit-mask-size: 0% 100%; mask-size: 0% 100%; transform: translateY(6px); opacity: .9; } 50% { transform: translateY(-2px); } 100% { -webkit-mask-size: 100% 100%; mask-size: 100% 100%; transform: translateY(0); opacity: 1; } }
     @media (prefers-reduced-motion: reduce) { .title { animation: none; -webkit-mask-size: 100% 100%; mask-size: 100% 100%; } }
+  .chev-wrap{ width:42px; height:42px; border-radius:999px; display:flex; align-items:center; justify-content:center; border:1.5px solid #d1d5db; background:linear-gradient(180deg,#fff, #f8fafc); box-shadow:0 2px 10px rgba(0,0,0,.06); }
+    .chev-wrap{ animation: bounce 1.4s infinite ease-in-out; }
   </style>
 </head>
 <body>
   <div class="wrap">
     <header class="hero">
       <h1 class="title">X‑Diffusion: Training Diffusion Policies on Cross‑Embodiment Human Demonstrations</h1>
-      <div class="authors">
-        <span class="author-chip"><a href="#">Maximus A. Pace</a></span>
-        <span class="author-chip"><a href="#">Prithwish Dan</a></span>
-        <span class="author-chip"><a href="#">Chuanruo Ning</a></span>
-        <span class="author-chip"><a href="#">Atiksh Bhardwaj</a></span>
-        <span class="author-chip"><a href="#">Audrey Du</a></span>
-        <span class="author-chip"><a href="#">Edward W. Duan</a></span>
-        <span class="author-chip"><a href="#">Wei‑Chiu Ma</a><sup>†</sup></span>
-        <span class="author-chip"><a href="#">Kushal Kedia</a><sup>†</sup></span>
+      <div class="authors-group">
+        <div class="authors-row">
+          <span class="author-chip"><a href="#">Maximus A. Pace</a></span>
+          <span class="author-chip"><a href="#">Prithwish Dan</a></span>
+          <span class="author-chip"><a href="#">Chuanruo Ning</a></span>
+          <span class="author-chip"><a href="#">Atiksh Bhardwaj</a></span>
+          <span class="author-chip"><a href="#">Audrey Du</a></span>
+          <span class="author-chip"><a href="#">Edward W. Duan</a></span>
+        </div>
+        <div class="authors-row">
+          <span class="author-chip"><a href="#">Wei‑Chiu Ma</a><sup>†</sup></span>
+          <span class="author-chip"><a href="#">Kushal Kedia</a><sup>†</sup></span>
+        </div>
       </div>
-      <p class="affil">Cornell University</p>
-      <div class="seal"><img src="cornell-seal.png"/></div>
+      
+      <div class="seal"><img src="cornell-seal.png" alt="Cornell University" /></div>
 
       <div class="cta-wrap"><nav class="cta">
         <a class="btn" href="#" disabled>📄 Paper</a>
@@ -117,7 +124,16 @@
       </div>
       
       
-      <div class="scroll-cue"><a class="scroll-link" href="#content-start">(scroll more) <div class="chev"></div></a></div></a></div>
+      <div class="scroll-cue">
+        <a class="scroll-link" href="#content-start">
+          <span>Scroll more</span>
+          <div class="chev-wrap">
+            <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+        </a>
+      </div>
     </header>
 
     <div id="content-start" class="spacer"></div>
@@ -136,17 +152,7 @@
     <img id="lightbox-img" src="teaser.jpg" alt="Teaser" style="max-width:92vw; max-height:90vh; border-radius:14px; box-shadow:0 12px 40px rgba(0,0,0,.4);" />
   </div>
   <script>
-    // Fade out the scroll cue after user starts scrolling
-    (function(){
-      const cue = document.querySelector('.scroll-cue');
-      function onScroll(){
-        const y = window.scrollY || document.documentElement.scrollTop;
-        if(!cue) return;
-        if(y > 40 && !cue.classList.contains('hidden')) cue.classList.add('hidden');
-        if(y <= 10 && cue.classList.contains('hidden')) cue.classList.remove('hidden');
-      }
-      window.addEventListener('scroll', onScroll, { passive: true });
-    })();
+    // Scroll cue always visible (no hide/show on scroll)
 
     // Teaser lightbox (no library)
     (function(){
