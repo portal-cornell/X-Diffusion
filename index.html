@@ -44,7 +44,7 @@
     .seal img { width: 68px; height: auto; display: block; margin: 0 auto; filter: drop-shadow(0 2px 6px rgba(0,0,0,.08)); }
 
     /* CTA */
-    .cta { display: flex; justify-content: center; flex-wrap: wrap; gap: 16px; margin-top: 18px; margin-bottom: 10px; }
+    .cta { display: flex; justify-content: center; flex-wrap: wrap; gap: 16px; margin-top: 18px; margin-bottom: 28px; }
     .btn { display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; border-radius: 999px; border: 1px solid #e5e7eb; background: #1f2937; color: #fff; font-weight: 600; text-decoration: none; box-shadow: 0 2px 10px rgba(0,0,0,0.12); transition: transform .15s ease, box-shadow .15s ease, background-color .15s ease; }
     .btn.secondary { background: #fff; color: var(--fg); }
     .btn:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,0,0,0.12); }
@@ -94,6 +94,10 @@
     section h2 { font-size: clamp(26px, 3.4vw, 36px); margin: 0 0 12px; }
     .kws { display:flex; flex-wrap:wrap; gap:8px; }
     .kw { font-size: .98rem; padding:6px 10px; border:1px solid #e5e7eb; border-radius:999px; background:#fff; }
+    .kw[aria-selected="true"]{ background:#eef2ff; border-color:#93c5fd; box-shadow:0 1px 6px rgba(59,130,246,.25); }
+    .kw:active{ transform:scale(0.97); }
+    @keyframes tagpulse{0%{transform:scale(1)}40%{transform:scale(1.05)}100%{transform:scale(1)}}
+    .kw.pulse{ animation:tagpulse .18s ease; }
 
     /* Footer */
     .spacer { height: 28px; }
@@ -250,7 +254,7 @@
       <h2>Abstract</h2>
       <p><strong>Human videos are fast and scalable</strong> to collect, making them appealing for robot learning. But <strong>humans and robots differ in embodiment</strong>, so direct kinematic retargeting can yield <strong>physically infeasible robot actions</strong>. Even so, human demonstrations carry <strong>high‑level manipulation cues</strong>.</p>
       <p>We exploit the <strong>forward diffusion</strong> process: as noise is added to actions, <strong>low‑level execution differences fade</strong> while <strong>task guidance is preserved</strong>. <strong>X‑DIFFUSION</strong> trains a classifier to tell whether a <em>noisy</em> action is human or robot, and <strong>only uses human actions for policy training once they are indistinguishable</strong>. <strong>Robot‑consistent</strong> actions supervise fine‑grained denoising at low noise; <strong>mismatched</strong> human actions provide coarse guidance at higher noise.</p>
-      <p>Across five manipulation tasks, <strong>X‑DIFFUSION improves success</strong> and achieves a <strong>~16% higher average rate</strong> than the best baseline.</p>
+      <p><strong>Naive co‑training</strong> under execution mismatches can degrade performance. Across five manipulation tasks, <strong>X‑DIFFUSION improves success</strong> and achieves a <strong>~16% higher average rate</strong> than the best baseline.</p>
     </section>
 
     <!-- Approach Overview with figures -->
@@ -263,19 +267,19 @@
       <h3>A. Unifying State and Action Spaces</h3>
       <p>We convert human videos into <strong>robot‑aligned state–action pairs</strong> using 3D hand‑pose estimation and lightweight retargeting, and narrow the visual gap with object masks and keypoint overlays.</p>
       <figure style="margin:8px 0 20px 0;">
-        <img src="media/image.png" alt="Unify" style="width:100%; border-radius:12px; box-shadow: var(--shadow); border:1px solid #e5e7eb;"/>
+        <img src="media/ image.jpg" alt="Unify" style="width:100%; border-radius:12px; box-shadow: var(--shadow); border:1px solid #e5e7eb;"/>
       </figure>
 
-      <h3>B. Classifier‑Gated Training</h3>
+      <h3>B. Equivalence under Noise</h3>
       <p>Adding noise strips away embodiment‑specific details so that at higher noise, human and robot actions become hard to distinguish. We <strong>use a human‑vs‑robot classifier</strong> to identify the earliest indistinguishability step and decide when human demonstrations are safe to learn from.</p>
       <figure style="margin:8px 0 20px 0;">
-        <img src="media/image2.png" alt="Equivalence" style="width:100%; border-radius:12px; box-shadow: var(--shadow); border:1px solid #e5e7eb;"/>
+        <img src="media/image2.jpg" alt="Equivalence" style="width:100%; border-radius:12px; box-shadow: var(--shadow); border:1px solid #e5e7eb;"/>
       </figure>
 
-      <h3>C. Policy Training</h3>
-      <p>During the <strong>reverse denoising</strong> phase of diffusion policy learning, we gate supervision: apply the denoising loss to human actions only when their noise level is beyond the indistinguishability step for that sequence. <strong>Robot‑consistent</strong> actions supervise <strong>fine‑grained denoising at low noise</strong>, while <strong>mismatched</strong> human actions provide <strong>coarse guidance at higher noise</strong>—maximizing human data use while preserving robot feasibility.</p>
+      <h3>C. Classifier‑Gated Training</h3>
+      <p>During the <strong>reverse denoising</strong> phase of diffusion policy learning, we gate supervision: apply the denoising loss to human actions only when their noise level is beyond the indistinguishability step for that sequence. <strong>Robot‑consistent</strong> actions supervise <strong>fine‑grained denoising at low noise</strong>, while <strong>mismatched</strong> human actions provide <strong>coarse guidance at higher noise</strong>. This maximizes human data use while preserving robot feasibility.</p>
       <figure style="margin:8px 0 0 0;">
-        <img src="media/image3.png" alt="Classifier gate" style="width:100%; border-radius:12px; box-shadow: var(--shadow); border:1px solid #e5e7eb;"/>
+        <img src="media/image3.jpg" alt="Classifier gate" style="width:100%; border-radius:12px; box-shadow: var(--shadow); border:1px solid #e5e7eb;"/>
       </figure>
     </section>
 
@@ -315,21 +319,21 @@
         </div>
         <div style="border:1px solid #e5e7eb; border-radius:12px; background:#fff; padding:12px; box-shadow:none;">
           <div style="font-weight:700; margin-bottom:6px;">Point Policy</div>
-          <div style="color:#374151;">Co‑trains on <strong>all human+robot data</strong> with hand/object keypoints.</div>
+          <div style="color:#374151;">Co‑trains on <strong>all human+robot data</strong> with hand/object keypoints</div>
         </div>
         <div style="border:1px solid #e5e7eb; border-radius:12px; background:#fff; padding:12px; box-shadow:none;">
           <div style="font-weight:700; margin-bottom:6px;">Motion Tracks</div>
-          <div style="color:#374151;">Co‑trains on <strong>all human+robot data</strong>; actions as hand keypoints with raw RGB.</div>
+          <div style="color:#374151;">Co‑trains on <strong>all human+robot data</strong>; actions as hand keypoints with raw RGB</div>
         </div>
         <div style="border:1px solid #e5e7eb; border-radius:12px; background:#fff; padding:12px; box-shadow:none;">
           <div style="font-weight:700; margin-bottom:6px;">DemoDiffusion</div>
-          <div style="color:#374151;">Conditions a <strong>robot‑only diffusion policy</strong> on a human trajectory.</div>
+          <div style="color:#374151;">Conditions a <strong>robot‑only diffusion policy</strong> on a human trajectory</div>
         </div>
       </div>
 
       <figure style="margin:0 0 18px 0;">
-        <img src="media/fig4.pdf" alt="Task‑wise success vs. baselines" style="width:100%; border-radius:12px; box-shadow: var(--shadow); border:1px solid #e5e7eb;"/>
-        <figcaption style="color:var(--muted);">X‑DIFFUSION can outperform Point Policy, Motion Tracks, DemoDiffusion, and naive co‑training across tasks.</figcaption>
+        <img src="media/fig4.png" alt="Task‑wise success vs. baselines" style="width:100%; border-radius:12px; box-shadow: var(--shadow); border:1px solid #e5e7eb;"/>
+        
       </figure>
 
       <!-- <div class="gallery centered" aria-label="Qualitative results">
@@ -463,6 +467,9 @@
       tagBar.addEventListener('click', (e)=>{
         const b = e.target.closest('.kw');
         if(!b) return;
+        b.classList.remove('pulse');
+        void b.offsetWidth; // restart animation
+        b.classList.add('pulse');
         show(b.dataset.task);
       });
       // init
