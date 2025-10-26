@@ -518,8 +518,10 @@
             <span class="author-chip"><a href="#">Edward W. Duan</a></span>
           </div>
           <div class="authors-row">
-            <span class="author-chip"><a href="#">Wei-Chiu Ma</a><sup>†</sup></span>
-            <span class="author-chip"><a href="#">Kushal Kedia</a><sup>†</sup></span>
+            <span class="author-chip"><a href="https://www.cs.cornell.edu/~weichiu/" target="_blank"
+                rel="noopener">Wei-Chiu Ma</a><sup>†</sup></span>
+            <span class="author-chip"><a href="https://kushal2000.github.io" target="_blank" rel="noopener">Kushal
+                Kedia</a><sup>†</sup></span>
           </div>
         </div>
         <div class="seal reveal d2"><img src="cornell-seal.jpg" alt="Cornell University" /></div>
@@ -538,24 +540,24 @@
     </header>
 
     <!-- One-sentence summary -->
-    <div class="reveal d4" id="summary">
-      <div class="summary-box" style="width:100%;">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none"
-          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="10" />
-          <line x1="12" y1="8" x2="12" y2="12" />
-          <line x1="12" y1="16" x2="12.01" y2="16" />
-        </svg>
-        <div class="summary-text" style="font-weight:800; font-size:1.35rem; letter-spacing:.1px;">X-Diffusion
-          selectively incorporates human actions according to their feasibility for the robot</div>
-      </div>
-    </div>
+    <!-- <nav class="mini-nav" aria-label="Section navigation">
+      <a href="#rollouts">Per-Task Feasibility Rollouts</a>
+      <a href="#abstract">Abstract</a>
+      <a href="#approach">Approach</a>
+      <a href="#results">Key Results</a>
+      <a href="#paper">Paper</a>
+    </nav> -->
 
     <!-- Intro video -->
-    <div class="grid" id="intro-video">
-      <div class="teaser reveal d5">
-        <video id="teaser-video" src="media/ICRA_Video.mp4" poster="media/intro_teaser.jpg" playsinline muted loop
-          autoplay controls></video>
+    <div class="grid" id="intro-video" style="width:100%;">
+      <div class="teaser reveal d5" style="width:100%;">
+        <figure
+          style="text-align:center; margin:0 0 16px 0; width:100%; border-radius:12px; box-shadow: var(--shadow); border:1px solid #e5e7eb; display:block; padding:20px 20px; background:#fff;">
+          <div class="summary-text" style="margin:0 0 16px 0; font-weight:800; font-size:1.35rem; letter-spacing:.1px;">
+            X-Diffusion
+            selectively incorporates noised human actions into Diffusion Policy training</div>
+          <img src="media/teaser3.pdf" alt="Intro Teaser" style="width:100%" />
+        </figure>
       </div>
     </div>
 
@@ -584,9 +586,30 @@
       </div>
     </section>
 
+    <section id="Motivation">
+      <h2>Humans Behave Differently from Robots</h2>
+      <div class="summary-box" style="width:100%; display:flex; flex-direction:row; gap:16px; align-items:stretch;">
+        <video src="media/pp_hi_fast.mp4" alt="Push Plate Human" muted loop playsinline autoplay
+          style="width:50%; height:auto;"></video>
+        <video src="media/pp_r.mp4" alt="Push Plate Robot" muted loop playsinline autoplay
+          style="width:50%; height:auto;"></video>
+      </div>
+      <h2>Naively Training on Human Data Causes Infeasible Robot Motions</h2>
+      <div class="summary-box"
+        style="width:50%; display:flex; flex-direction:row; gap:16px; align-items:stretch; margin:0 auto;">
+        <video src="media/pp_hi_rollout.mp4" alt="Push Plate Human" muted loop playsinline autoplay
+          style="width:100%; height:auto;"></video>
+      </div>
+      <h2>Adding Noise Makes Human and Robot Actions Indistinguishable</h2>
+      <div class="summary-box" style="width:100%; display:flex; flex-direction:row; gap:16px; align-items:stretch;">
+        <video src="media/long_teaser.mov" alt="Push Plate Human" muted loop playsinline autoplay
+          style="width:100%; height:auto;"></video>
+      </div>
+    </section>
+
 
     <!-- Scroll cue -->
-    <div class="scroll-cue reveal d6" role="button" tabindex="0" aria-label="Scroll to content">
+    <!-- <div class="scroll-cue reveal d6" role="button" tabindex="0" aria-label="Scroll to content">
       <a class="scroll-link" href="#content-start">
         <span>Scroll for more</span>
         <div class="chev-wrap">
@@ -596,137 +619,17 @@
           </svg>
         </div>
       </a>
-    </div>
-
-    <nav class="mini-nav" aria-label="Section navigation">
-      <a href="#rollouts">Per-Task Feasibility Rollouts</a>
-      <a href="#abstract">Abstract</a>
-      <a href="#approach">Approach</a>
-      <a href="#results">Key Results</a>
-      <a href="#paper">Paper</a>
-    </nav>
-
-    <!-- Real Robot Rollouts -->
-    <section id="rollouts">
-      <h2>Real World Rollouts</h2>
-      <p>Pick a task to see, side-by-side: a <strong>robot demonstration</strong>, a
-        <strong>human-demonstration</strong>, and an <strong>X-Diffusion rollout</strong>.
-      </p>
-      <div class="kws" id="task-tags" role="tablist" aria-label="Task chooser">
-        <button class="kw" data-task="drawer" aria-selected="true">Close Drawer</button>
-        <button class="kw" data-task="egg">Serve Egg</button>
-        <button class="kw" data-task="plate">Push Plate</button>
-        <button class="kw" data-task="mug">Mug On Rack</button>
-        <button class="kw" data-task="bottle">Bottle Upright</button>
-      </div>
-
-      <!-- Per-task containers (one row only) -->
-      <div class="task-container" id="task-drawer" style="margin-top:16px;">
-        <h3 style="margin:10px 0 6px;">Close Drawer</h3>
-        <div class="gallery centered" aria-label="Close Drawer — mixed row">
-          <div class="gallery-track">
-            <div class="shot"><video src="media/drawer_robot_demo.mp4" muted loop playsinline></video>
-              <div class="cap">Robot</div>
-            </div>
-            <div class="shot"><video src="media/drawer_hi.mp4" muted loop playsinline></video>
-              <div class="cap">Human-Feasible</div>
-            </div>
-            <div class="shot"><video src="media/drawer_x.mp4" muted loop playsinline></video>
-              <div class="cap">Human-Infeasible</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="task-container" id="task-egg" style="display:none; margin-top:16px;">
-        <h3 style="margin:10px 0 6px;">Serve Egg</h3>
-        <div class="gallery centered" aria-label="Serve Egg — mixed row">
-          <div class="gallery-track">
-            <div class="shot"><video src="media/serveegg_robot_demo.mp4" muted loop playsinline></video>
-              <div class="cap">Robot</div>
-            </div>
-            <div class="shot"><video src="media/serveegg_hi_demo.mp4" muted loop playsinline></video>
-              <div class="cap">Human-Feasible</div>
-            </div>
-            <div class="shot"><video src="media/serveegg_x.mp4" muted loop playsinline></video>
-              <div class="cap">Human-Infeasible</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="task-container" id="task-plate" style="display:none; margin-top:16px;">
-        <h3 style="margin:10px 0 6px;">Push Plate</h3>
-        <div class="gallery centered" aria-label="Push Plate — mixed row">
-          <div class="gallery-track">
-            <div class="shot"><video src="media/pp_r.mp4" muted loop playsinline></video>
-              <div class="cap">Robot</div>
-            </div>
-            <div class="shot"><video src="media/pp_hi_fast.mp4" muted loop playsinline></video>
-              <div class="cap">Human-Feasible</div>
-            </div>
-            <div class="shot"><video src="media/pp_r.mp4" muted loop playsinline></video>
-              <div class="cap">Human-Infeasible</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="task-container" id="task-mug" style="display:none; margin-top:16px;">
-        <h3 style="margin:10px 0 6px;">Mug On Rack</h3>
-        <div class="gallery centered" aria-label="Mug On Rack — mixed row">
-          <div class="gallery-track">
-            <div class="shot"><video src="media/mug_robot_demo.mp4" muted loop playsinline></video>
-              <div class="cap">Robot</div>
-            </div>
-            <div class="shot"><video src="media/mug_hi.mp4" muted loop playsinline></video>
-              <div class="cap">Human-Feasible</div>
-            </div>
-            <div class="shot"><video src="media/mug_x.mp4" muted loop playsinline></video>
-              <div class="cap">Human-Infeasible</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="task-container" id="task-bottle" style="display:none; margin-top:16px;">
-        <h3 style="margin:10px 0 6px;">Bottle Upright</h3>
-        <div class="gallery centered" aria-label="Bottle Upright — mixed row">
-          <div class="gallery-track">
-            <div class="shot"><video src="media/bottle_robot_1.mp4" muted loop playsinline></video>
-              <div class="cap">Robot</div>
-            </div>
-            <div class="shot"><video src="media/bottle_hf_1.mp4" muted loop playsinline></video>
-              <div class="cap">Human-Feasible</div>
-            </div>
-            <div class="shot"><video src="media/bottle_hi_1.mp4" muted loop playsinline></video>
-              <div class="cap">Human-Infeasible</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    </div> -->
 
     <!-- Approach Overview with figures -->
     <section id="approach">
-      <h2>Approach Overview</h2>
-      <!-- <figure style="margin:0 0 16px 0;">
-        <img src="media/pipeline.png" alt="Pipeline"
-          style="width:100%; border-radius:12px; box-shadow: var(--shadow); border:1px solid #e5e7eb;" />
-      </figure> -->
-      <h3>A. Unifying State and Action Spaces</h3>
-      <p>We convert human videos into <strong>robot-aligned state–action pairs</strong> using 3D hand-pose estimation
+      <h2>X-Diffusion Pipeline</h2>
+      <div class="summary-box" style="width:100%; display:flex; flex-direction:row; gap:16px; align-items:stretch;">
+        <video src="media/pipeline_video.mov" alt="Pipeline" muted loop playsinline autoplay
+          style="width:100%; height:auto;"></video>
+      </div>
+      <p>We convert human videos into <strong>robot-aligned state-action pairs</strong> using 3D hand-pose estimation
         and lightweight retargeting, and reduce the visual gap with object masks and keypoint overlays.</p>
-      <!-- <figure style="margin:8px 0 20px 0;">
-        <img src="media/image.jpg" alt="Unify"
-          style="width:100%; border-radius:12px; box-shadow: var(--shadow); border:1px solid #e5e7eb;" />
-      </figure> -->
-      <figure style="margin:0 0 16px 0;">
-        <img src="media/pipeline.png" alt="Pipeline"
-          style="width:100%; border-radius:12px; box-shadow: var(--shadow); border:1px solid #e5e7eb;" />
-      </figure>
-
-      <h3>B. Equivalence under Noise</h3>
       <p>Adding noise suppresses embodiment-specific details while preserving task intent. We <strong>use a
           human-vs-robot classifier</strong> to find the earliest noise level where human actions are
         <strong>indistinguishable</strong> from robot actions and treat them as safe supervision.
@@ -734,16 +637,6 @@
       <figure style="margin:8px 0 0 0">
         <img src="media/fig6.pdf" alt="Classifier gate"
           style="width:60%; border-radius:12px; box-shadow: var(--shadow); border:1px solid #e5e7eb; display:block; margin:0 auto; background:#fff; padding:20px 20px;" />
-      </figure>
-      <h3>C. Classifier-Gated Training</h3>
-      <p>During <strong>reverse denoising</strong>, we apply loss to human actions only when their noise level is beyond
-        the indistinguishability step for that sequence. <strong>Robot-consistent</strong> actions guide fine-grained
-        denoising at low noise, while <strong>mismatched</strong> human motions provide coarse guidance at higher
-        noise—maximizing data use without sacrificing feasibility.</p>
-
-      <figure style="margin:8px 0 0 0">
-        <img src="media/fig3_final_final_final.pdf" alt="Equivalence"
-          style="width:90%; border-radius:12px; box-shadow: var(--shadow); border:1px solid #e5e7eb; display:block; margin:0 auto; padding:20px 20px; background:#fff;" />
       </figure>
     </section>
 
@@ -759,43 +652,14 @@
       </div>
 
       <figure style="margin:0 0 18px 0;">
-        <img src="media/Baselines.pdf" alt="Task-wise success vs. baselines"
+        <img src="media/Baselines.pdf" alt="Naive vs X-Diffusion"
           style="width:100%; border-radius:12px; box-shadow: var(--shadow); border:1px solid #e5e7eb;" />
       </figure>
 
       <h3>2) Comparison with Cross-Embodiment Learning Baselines</h3>
-      <div class="summary-box" style="margin-bottom:12px;">
-        <div class="summary-text"><strong>X-Diffusion</strong> <strong>can outperform</strong> Point Policy, Motion
-          Tracks,
-          DemoDiffusion, and naive co-training across tasks.</div>
-      </div>
-      <div
-        style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:12px; margin:8px 0 12px 0;">
-        <div style="border:1px solid #e5e7eb; border-radius:12px; background:#fff; padding:12px; box-shadow:none;">
-          <div style="font-weight:700; margin-bottom:6px;">Diffusion Policy</div>
-          <div style="color:#374151;">Trains only on <strong>5 robot demonstrations</strong></div>
-        </div>
-        <div style="border:1px solid #e5e7eb; border-radius:12px; background:#fff; padding:12px; box-shadow:none;">
-          <div style="font-weight:700; margin-bottom:6px;">Point Policy</div>
-          <div style="color:#374151;">Co-trains on <strong>all human+robot data</strong> with hand/object keypoints
-          </div>
-        </div>
-        <div style="border:1px solid #e5e7eb; border-radius:12px; background:#fff; padding:12px; box-shadow:none;">
-          <div style="font-weight:700; margin-bottom:6px;">Motion Tracks</div>
-          <div style="color:#374151;">Co-trains on <strong>all human+robot data</strong>; actions as hand keypoints with
-            raw
-            RGB</div>
-        </div>
-        <div style="border:1px solid #e5e7eb; border-radius:12px; background:#fff; padding:12px; box-shadow:none;">
-          <div style="font-weight:700; margin-bottom:6px;">DemoDiffusion</div>
-          <div style="color:#374151;">Conditions a <strong>robot-only diffusion policy</strong> on a human trajectory
-          </div>
-        </div>
-      </div>
-
       <figure style="margin:0 0 18px 0;">
         <img src="media/fig4.png" alt="Task-wise success vs. baselines"
-          style="width:100%; border-radius:12px; box-shadow: var(--shadow); border:1px solid #e5e7eb;" />
+          style="width:100%; border-radius:12px; padding:10px 10px; background:#fff;" />
       </figure>
     </section>
 
