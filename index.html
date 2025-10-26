@@ -60,7 +60,7 @@
 
     .header-card {
       display: inline-block;
-      padding: 18px 20px;
+      padding: 25px 30px;
       border: 1px solid #e5e7eb;
       border-radius: var(--radius);
       background: linear-gradient(180deg, #fff, #f7f9fc);
@@ -448,20 +448,26 @@
     }
 
     /* Paper section styles */
+    .paper-row {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
     .paper-thumbnail {
-      margin: 0 auto;
-      width: 20%;
-      /* max-width: 400px; */
-      display: inline-block;
-      vertical-align: top;
-      padding: 2% 10% 4% 0;
+      margin: 0;
+      flex: 0 0 30%;
+      max-width: 380px;
+      display: block;
+      padding: 0 46px 0 0;
+      /* reserve space for layered shadow on the right */
     }
 
     .paper-info {
-      width: 45%;
-      /* height: 100%; */
-      display: inline-block;
-      vertical-align: top;
+      flex: 1 1 0;
+      min-width: 0;
+      display: block;
       text-align: left;
     }
 
@@ -490,7 +496,7 @@
         25px 25px 1px 1px rgba(0, 0, 0, 0.35);
       /* The fifth layer shadow */
       margin-left: 10px;
-      margin-right: 45px;
+      margin-right: 0;
     }
 
     /* Disable center zoom/selection effect */
@@ -684,20 +690,22 @@
         <div class="columns is-centered has-text-centered">
           <div class="column" id="Paper">
             <h2 class="title is-3">Paper</h2>
-            <div class="paper-thumbnail">
-              <a href="X-Diffusion.pdf">
-                <img class="layered-paper-big" width="100%" src="X-Diffusion_preview.png" alt="Paper thumbnail" />
-              </a>
-            </div>
-            <div class="paper-info">
-              <h3 class="title is-4" style="text-align: center;">BibTex</h3>
-              <pre
-                style="background:#0b1020; color:#e5e7eb; padding:14px 16px; border-radius:12px; overflow:auto; font-size:.9rem;">@inproceedings{pace2026xdiffusion,
-  title     = {X-Diffusion: Training Diffusion Policies on Cross-Embodiment Human Demonstrations},
-  author    = {Pace, Maximus A. and Dan, Prithwish and Ning, Chuanruo and Bhardwaj, Atiksh and Du, Audrey and Duan, Edward W. and Ma, Wei-Chiu and Kedia, Kushal},
-  booktitle = {IEEE Int. Conf. on Robotics and Automation (ICRA)},
-  year      = {2026}
+            <div class="paper-row">
+              <div class="paper-thumbnail">
+                <a href="X-Diffusion.pdf">
+                  <img class="layered-paper-big" width="100%" src="X-Diffusion_preview.png" alt="Paper thumbnail" />
+                </a>
+              </div>
+              <div class="paper-info">
+                <h3 class="title is-4" style="text-align: center;">BibTex</h3>
+                <pre
+                  style="background:#0b1020; color:#e5e7eb; padding:14px 16px; border-radius:12px; overflow:auto; font-size:.9rem;">@unpublished{pace2026xdiffusion,
+  title        = {X-Diffusion: Training Diffusion Policies on Cross-Embodiment Human Demonstrations},
+  author       = {Pace, Maximus A. and Dan, Prithwish and Ning, Chuanruo and Bhardwaj, Atiksh and Du, Audrey and Duan, Edward W. and Ma, Wei-Chiu and Kedia, Kushal},
+  note         = {Manuscript submitted to the IEEE International Conference on Robotics and Automation (ICRA)},
+  year         = {2026}
 }</pre>
+              </div>
             </div>
           </div>
         </div>
