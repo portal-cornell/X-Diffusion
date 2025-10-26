@@ -441,6 +441,12 @@
       margin-top: 36px;
     }
 
+    /* Force title to exactly two lines */
+    h1.title .tline {
+      display: block;
+      white-space: nowrap;
+    }
+
     /* Paper section styles */
     .paper-thumbnail {
       margin: 0 auto;
@@ -501,8 +507,9 @@
   <div class="wrap">
     <header class="hero">
       <div class="header-card">
-        <h1 class="title reveal d0">X-Diffusion: Training Diffusion Policies on Cross-Embodiment Human Demonstrations
-          <br>
+        <h1 class="title reveal d0">
+          <span class="tline">X-Diffusion: Training Diffusion Policies on</span>
+          <span class="tline">Cross-Embodiment Human Demonstrations</span>
         </h1>
         <div class="authors-group reveal d1">
           <div class="authors-row">
