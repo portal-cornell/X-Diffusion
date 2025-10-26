@@ -634,10 +634,10 @@
           human-vs-robot classifier</strong> to find the earliest noise level where human actions are
         <strong>indistinguishable</strong> from robot actions and treat them as safe supervision.
       </p>
-      <figure style="margin:8px 0 0 0">
+      <!-- <figure style="margin:8px 0 0 0">
         <img src="media/fig6.pdf" alt="Classifier gate"
           style="width:60%; border-radius:12px; box-shadow: var(--shadow); border:1px solid #e5e7eb; display:block; margin:0 auto; background:#fff; padding:20px 20px;" />
-      </figure>
+      </figure> -->
     </section>
 
     <!-- Key Results with figures/videos -->
@@ -645,18 +645,21 @@
       <h2>Key Results</h2>
 
       <h3>1) Policy Co-Training Setups</h3>
-      <div class="summary-box" style="margin-bottom:14px;">
-        <div class="summary-text">We compare <strong>X-Diffusion</strong> with <em>FILTERED</em> (robot-verified human
-          demos only), <em>NAIVE</em> (all human data), and <em>ROBOT</em> (robot-only) and find <strong>consistent
-            gains on every task</strong>.</div>
-      </div>
+      <p>We compare <strong>X-Diffusion</strong> with <em>FILTERED</em> (robot-verified human
+        demos only), <em>NAIVE</em> (all human data), and <em>ROBOT</em> (robot-only) and find <strong>consistent
+          gains on every task</strong>.</p>
 
-      <figure style="margin:0 0 18px 0;">
+      <!-- <figure style="margin:0 0 18px 0;">
         <img src="media/Baselines.pdf" alt="Naive vs X-Diffusion"
           style="width:100%; border-radius:12px; box-shadow: var(--shadow); border:1px solid #e5e7eb;" />
-      </figure>
+      </figure> -->
+      <div class="summary-box" style="width:100%; display:flex; flex-direction:row; gap:16px; align-items:stretch;">
+        <video src="media/Baseline_video.mov" alt="Naive vs X-Diffusion" muted loop playsinline autoplay
+          style="width:100%; height:auto;"></video>
+      </div>
 
       <h3>2) Comparison with Cross-Embodiment Learning Baselines</h3>
+      We demonstrate that X-Diffusion can outperform other cross-embodiment learning baselines across all tasks.
       <figure style="margin:0 0 18px 0;">
         <img src="media/fig4.png" alt="Task-wise success vs. baselines"
           style="width:100%; border-radius:12px; padding:10px 10px; background:#fff;" />
