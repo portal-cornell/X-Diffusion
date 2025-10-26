@@ -595,11 +595,12 @@
 
     <section id="Motivation">
       <h2>Humans Behave Differently from Robots</h2>
-      <div class="summary-box" style="width:100%; display:flex; flex-direction:row; gap:16px; align-items:stretch;">
-        <video src="media/pp_hi_fast.mp4" alt="Push Plate Human" muted loop playsinline autoplay
-          style="width:50%; height:auto;"></video>
-        <video src="media/pp_r.mp4" alt="Push Plate Robot" muted loop playsinline autoplay
-          style="width:50%; height:auto;"></video>
+      <div class="summary-box"
+        style="width:100%; display:flex; flex-direction:row; gap:16px; align-items:stretch; justify-content:center; padding:20px;">
+        <video src="media/pp_hi_crop.mp4" alt="Push Plate Human" muted loop playsinline autoplay
+          style="width:calc(50% - 8px); height:auto; object-fit:contain;"></video>
+        <video src="media/pp_r_crop.mp4" alt="Push Plate Robot" muted loop playsinline autoplay
+          style="width:calc(50% - 8px); height:auto; object-fit:contain;"></video>
       </div>
       <!-- <h2>Naively Training on Human Data Causes Infeasible Robot Motions</h2>
       <div class="summary-box"
