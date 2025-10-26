@@ -601,12 +601,12 @@
         <video src="media/pp_r.mp4" alt="Push Plate Robot" muted loop playsinline autoplay
           style="width:50%; height:auto;"></video>
       </div>
-      <h2>Naively Training on Human Data Causes Infeasible Robot Motions</h2>
+      <!-- <h2>Naively Training on Human Data Causes Infeasible Robot Motions</h2>
       <div class="summary-box"
         style="width:50%; display:flex; flex-direction:row; gap:16px; align-items:stretch; margin:0 auto;">
         <video src="media/pp_hi_rollout.mp4" alt="Push Plate Human" muted loop playsinline autoplay
           style="width:100%; height:auto;"></video>
-      </div>
+      </div> -->
       <h2>Adding Noise Makes Human and Robot Actions Indistinguishable</h2>
       <div class="summary-box" style="width:100%; display:flex; flex-direction:row; gap:16px; align-items:stretch;">
         <video src="media/long_teaser.mov" alt="Push Plate Human" muted loop playsinline autoplay
@@ -651,7 +651,8 @@
     <section id="results">
       <h2>Key Results</h2>
 
-      <h3>1) Policy Co-Training Setups</h3>
+      <h3>1) X-Diffusion can training on all human data, while naively training on all human data
+        leads to infeasible robot motions</h3>
       <p>We compare <strong>X-Diffusion</strong> with <em>FILTERED</em> (robot-verified human
         demos only), <em>NAIVE</em> (all human data), and <em>ROBOT</em> (robot-only) and find <strong>consistent
           gains on every task</strong>.</p>
@@ -665,8 +666,10 @@
           style="width:100%; height:auto;"></video>
       </div>
 
-      <h3>2) Comparison with Cross-Embodiment Learning Baselines</h3>
-      We demonstrate that X-Diffusion can outperform other cross-embodiment learning baselines across all tasks.
+      <h3>2) X-Diffusion outperforms prior cross-embodiment learning baselines</h3>
+      We demonstrate empirically that <strong>X-Diffusion</strong> outperforms other cross-embodiment learning
+      baselines <strong>across all tasks</strong>, which see either <strong>small performance gains</strong> or
+      <strong>degraded performance</strong> when using all human data.
       <figure style="margin:0 0 18px 0;">
         <img src="media/fig4.png" alt="Task-wise success vs. baselines"
           style="width:100%; border-radius:12px; padding:10px 10px; background:#fff;" />
