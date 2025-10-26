@@ -165,11 +165,8 @@
     }
 
     .teaser video {
-      width: 82%;
-      max-width: 960px;
+      width: 100%;
       height: auto;
-      aspect-ratio: 16/9;
-      border-radius: 12px;
       object-fit: cover;
     }
 
@@ -506,6 +503,25 @@
       z-index: auto;
       border-color: #dbeafe;
     }
+
+    .video-frame {
+      border-radius: 12px;
+      /* or whatever looks right */
+      overflow: hidden;
+      /* clips the video and removes the halo */
+      background: #fff;
+      /* matches the card so any AA blends perfectly */
+    }
+
+    .video-frame>video {
+      display: block;
+      /* removes inline-gap */
+      width: 100%;
+      height: auto;
+      border: 0;
+      outline: 0;
+      /* no border-radius on the video itself */
+    }
   </style>
 </head>
 
@@ -562,16 +578,15 @@
     </nav> -->
 
     <!-- Intro video -->
-    <div class="grid" id="intro-video" style="width:100%;">
-      <div class="teaser reveal d5" style="width:100%;">
-        <figure
-          style="text-align:center; margin:0 0 16px 0; width:100%; border-radius:12px; box-shadow: var(--shadow); border:1px solid #e5e7eb; display:block; padding:20px 20px; background:#fff;">
-          <div class="summary-text" style="margin:0 0 16px 0; font-weight:800; font-size:1.35rem; letter-spacing:.1px;">
-            X-Diffusion
-            selectively incorporates noised human actions into Diffusion Policy training</div>
-          <img src="media/teaser3.pdf" alt="Intro Teaser" style="width:100%" />
-        </figure>
-      </div>
+    <div class="teaser reveal d5" style="width:100%;">
+      <figure
+        style="text-align:center; margin:0 0 16px 0; width:100%; border-radius:12px; box-shadow: var(--shadow); border:1px solid #e5e7eb; display:block; padding:20px 20px; background:#fff;">
+        <div class="summary-text" style="margin:0 0 16px 0; font-weight:800; font-size:1.35rem; letter-spacing:.1px;">
+          X-Diffusion
+          selectively incorporates noised human actions into Diffusion Policy training</div>
+        <video src="media/Teaser_video.mov" alt="Intro Teaser" muted playsinline autoplay
+          style="width:100%; height:auto;"></video>
+      </figure>
     </div>
 
     <!-- Abstract -->
