@@ -630,10 +630,13 @@
           style="width:100%; height:auto;"></video>
       </div> -->
       <h2>Adding Noise Makes Human and Robot Actions Indistinguishable</h2>
-      <div class="summary-box" style="width:100%; display:flex; flex-direction:row; gap:16px; align-items:stretch;">
-        <video src="media/long_teaser.mov" alt="Push Plate Human" muted loop playsinline autoplay
-          style="width:100%; height:auto;"></video>
-      </div>
+      <!-- <div class="summary-box" style="width:100%; display:flex; flex-direction:row; gap:16px; align-items:stretch;"> -->
+      <!-- <video src="media/long_teaser.mov" alt="Push Plate Human" muted loop playsinline autoplay
+          style="width:100%; height:auto;"></video> -->
+      <iframe id="noise-demo-iframe" src="noise_demo.html" width="100%" , height="820"
+        style="border:0; display:block; border-radius:12px; box-shadow: var(--shadow); border:1px solid #e5e7eb; background:#fff; overflow:hidden; padding:20px;">
+      </iframe>
+      <!-- </div> -->
     </section>
 
 
@@ -888,6 +891,14 @@
       });
       show('mug');
     })();
+  </script>
+  <script>
+    window.addEventListener('message', (event) => {
+      if (event.data && event.data.id === 'noise-demo') {
+        const iframe = document.getElementById('noise-demo-iframe');
+        if (iframe) iframe.style.height = event.data.height + 'px';
+      }
+    });
   </script>
 </body>
 
