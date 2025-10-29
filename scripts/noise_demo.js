@@ -4,12 +4,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const pointStroke = { orange: "#c2410c", green: "#bbf7d0", blue: "#0ea5e9" };
 
   /* CONFIG */
-  const maxSigma = 25;         // 100% => σ = 34
-  const samplesPerSeg = 7;     // keep your setting
+  const maxSigma = 25;
+  const samplesPerSeg = 7;
   const MID_IDX = samplesPerSeg;
   const END_IDX = 2 * samplesPerSeg;
 
-  /* CONTROL POINTS (two 3-pt segments per color) */
+  /* CONTROL POINTS (your current) */
   const control = {
     orange: [
       [[396, 178], [154, 220], [200, 408]],
@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     green: [
       [[422, 314], [194, 302], [220, 480]],
       [[1018, 310], [822, 374], [882, 508]],
-      [[1622, 314], [1520, 416], [1448, 510]]
+      [[1622, 314], [1520, 416], [1429, 510]]
     ],
     blue: [
       [[374, 304], [128, 302], [156, 478]],
@@ -28,20 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
     ]
   };
 
-  /* HARDCODED TARGETS for all 18 dots (start, mid, end for each segment) */
+  /* HARDCODED TARGETS (your current) */
   const hardcodedTargets = {
-    // orange: [
-    //   [[56, 76], [614, 133], [1126, 113]],   // segment 0
-    //   [[148, 554], [516, 559], [1164, 564]]   // segment 1
-    // ],
-    // green: [
-    //   [[189, 216], [715, 170], [1174, 214]],
-    //   [[173, 612], [659, 574], [1136, 604]]
-    // ],
-    // blue: [
-    //   [[70, 243], [644, 245], [1049, 130]],
-    //   [[83, 647], [630, 625], [1082, 588]]
-    // ]
     orange: [
       [[370, 136], [244, 212], [266, 428]],
       [[1020, 194], [875, 318], [956, 488]],
@@ -59,8 +47,14 @@ document.addEventListener('DOMContentLoaded', () => {
     ]
   };
 
+  /* BACKGROUND SETS */
+  const bgSets = {
+    on: ['media/noise_demo_imgs/img0.png', 'media/noise_demo_imgs/img1.png', 'media/noise_demo_imgs/img2.png'],
+    off: ['media/noise_demo_imgs/white0.png', 'media/noise_demo_imgs/white1.png', 'media/noise_demo_imgs/white2.png'],
+  };
+
   /* STATE */
-  let currentSeed = 1522; // fixed seed (no UI)
+  let currentSeed = 1522;
   const denseBase = { orange: [], green: [], blue: [] };
   const noiseVecs = { orange: [], green: [], blue: [] };
   const latestNoisy = { orange: [], green: [], blue: [] };
@@ -71,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const slider = document.getElementById('slider');
   const toggleBg = document.getElementById('toggleBg');
 
-  /* SVG elements */
+  /* SVG elems */
   const paths = { orange: [], green: [], blue: [] };
   const pointGroups = { orange: make('g', {}), green: make('g', {}), blue: make('g', {}) };
 
@@ -84,68 +78,84 @@ document.addEventListener('DOMContentLoaded', () => {
     svg.appendChild(pointGroups[k]);
   }
 
-  /* Background sizing + toggle */
+  /* Background sizing (no opacity toggle anymore) */
   function fitSVGToImage() {
     const w = bgEl.naturalWidth || bgEl.width, h = bgEl.naturalHeight || bgEl.height;
     if (w && h) svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
-    bgEl.style.opacity = toggleBg.checked ? '1' : '0';
     sendParentHeightSoon();
   }
   if (bgEl.complete) { fitSVGToImage(); } else { bgEl.addEventListener('load', fitSVGToImage); }
-  toggleBg.addEventListener('change', () => {
-    bgEl.style.opacity = toggleBg.checked ? '1' : '0';
-    sendParentHeightSoon();
-  });
 
-  /* INIT */
+  /* INIT curves */
   for (const k of Object.keys(control)) {
     denseBase[k] = control[k].map(seg => sampleDense(seg, samplesPerSeg));
   }
   resampleNoiseWithSeed(currentSeed);
 
+  /* Slider fill gradient */
   const setFill = () => {
     const pct = (slider.value - slider.min) * 100 / (slider.max - slider.min);
     slider.style.setProperty('--_pct', pct + '%');
   };
+
+  /* Bucket helper and background switcher */
+  function bucketFor(val) {
+    const v = Number(val);
+    if (v <= 45) return 0;
+    if (v <= 85) return 1;
+    return 2;
+  }
+  function updateBackground() {
+    const set = toggleBg.checked ? bgSets.on : bgSets.off;
+    const idx = bucketFor(slider.value);
+    const nextSrc = set[idx];
+    if (bgEl.getAttribute('src') !== nextSrc) {
+      bgEl.src = nextSrc;     // fitSVGToImage will run on load
+    } else {
+      // ensure layout updates even if same src (e.g., first run)
+      fitSVGToImage();
+    }
+  }
+
+  /* Wire UI */
   setFill();
-  slider.addEventListener('input', setFill);
-
-  redrawNoisy(currentSigma(), sliderFrac());
-
-  /* UI: noise only; anchors lerp by slider fraction */
+  updateBackground();
   slider.addEventListener('input', () => {
+    setFill();
+    updateBackground();
     redrawNoisy(currentSigma(), sliderFrac());
   });
+  toggleBg.addEventListener('change', () => {
+    updateBackground();
+  });
+  bgEl.addEventListener('load', fitSVGToImage);
 
+  /* First draw */
+  redrawNoisy(currentSigma(), sliderFrac());
+
+  /* ----- Drawing logic ----- */
   function sliderFrac() {
     const f = (Number(slider.value) - Number(slider.min)) / (Number(slider.max) - Number(slider.min));
     return Math.max(0, Math.min(1, isFinite(f) ? f : 0));
   }
 
-  /* Redraw noisy curves + move dots */
   function redrawNoisy(sigma, tAnchor) {
     for (const k of Object.keys(denseBase)) {
       latestNoisy[k] = [];
       denseBase[k].forEach((dense, segIdx) => {
         const out = new Array(dense.length);
-
         for (let i = 0; i < dense.length; i++) {
           if (i === 0) {
-            // start anchor -> hardcoded target[0]
             out[i] = lerp2(dense[i], hardcodedTargets[k][segIdx][0], tAnchor);
           } else if (i === MID_IDX) {
-            // mid anchor -> hardcoded target[1]
             out[i] = lerp2(dense[i], hardcodedTargets[k][segIdx][1], tAnchor);
           } else if (i === END_IDX) {
-            // end anchor -> hardcoded target[2]
             out[i] = lerp2(dense[i], hardcodedTargets[k][segIdx][2], tAnchor);
           } else {
-            // intermediate points get Gaussian noise
             const n = noiseVecs[k][segIdx][i];
             out[i] = [dense[i][0] + sigma * n[0], dense[i][1] + sigma * n[1]];
           }
         }
-
         latestNoisy[k][segIdx] = out;
         paths[k][segIdx].setAttribute('d', pathFromPoints(out));
       });
@@ -154,7 +164,6 @@ document.addEventListener('DOMContentLoaded', () => {
     sendParentHeightSoon();
   }
 
-  /* Draw the 18 dots at start/mid/end (they track the curve points) */
   function drawControlPoints() {
     const r = 14;
     for (const k of Object.keys(pointGroups)) {
@@ -162,7 +171,6 @@ document.addEventListener('DOMContentLoaded', () => {
       group.innerHTML = '';
       const fill = colors[k];
       const stroke = pointStroke[k];
-
       latestNoisy[k].forEach(noisySeg => {
         if (!noisySeg || noisySeg.length < END_IDX + 1) return;
         const a = noisySeg[0];
