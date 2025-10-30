@@ -9,23 +9,24 @@
     content="X-Diffusion: Training Diffusion Policies on Cross-Embodiment Human Demonstrations." />
   <link rel="icon" href="icon.jpg" type="image/jpg" />
   <link rel="shortcut icon" href="icon.jpg" type="image/jpg" />
+
   <style>
     :root {
       --bg-start: #ffffff;
       --bg-end: #eef2ff;
       --fg: #111827;
       --muted: #6b7280;
-      --card: #ffffff;
-      --radius: 16px;
-      --shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      --radius: 12px;
+      --shadow: 0 8px 24px rgba(0, 0, 0, .08);
       --maxw: 1100px;
+      --fig-pad: 20px;
       scroll-behavior: smooth;
     }
 
     html,
     body {
       margin: 0;
-      font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;
       color: var(--fg);
       line-height: 1.75;
     }
@@ -42,7 +43,6 @@
     }
 
     .hero {
-      /* min-height: 86vh; */
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -55,14 +55,18 @@
       font-weight: 800;
       line-height: 1.1;
       margin: 0 0 12px;
-      color: var(--fg);
+    }
+
+    h1.title .tline {
+      display: block;
+      white-space: nowrap;
     }
 
     .header-card {
       display: inline-block;
       padding: 25px 30px;
       border: 1px solid #e5e7eb;
-      border-radius: var(--radius);
+      border-radius: 16px;
       background: linear-gradient(180deg, #fff, #f7f9fc);
       box-shadow: var(--shadow);
       margin: 20px auto 24px;
@@ -137,7 +141,7 @@
       color: #fff;
       font-weight: 600;
       text-decoration: none;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, .12);
       transition: transform .15s ease, box-shadow .15s ease, background-color .15s ease;
     }
 
@@ -148,26 +152,7 @@
 
     .btn:hover {
       transform: translateY(-1px);
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 24px;
-      margin-top: 32px;
-      width: 100%;
-    }
-
-    .teaser {
-      display: flex;
-      justify-content: center;
-    }
-
-    .teaser video {
-      width: 100%;
-      height: auto;
-      object-fit: cover;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, .12);
     }
 
     .summary-box {
@@ -179,200 +164,11 @@
       display: flex;
       align-items: flex-start;
       gap: 10px;
-      box-shadow: none;
-    }
-
-    .summary-box svg {
-      flex: 0 0 18px;
-      margin-top: 2px;
-      color: #231f20;
-      opacity: .6;
+      box-shadow: var(--shadow);
     }
 
     .summary-text {
       flex: 1;
-    }
-
-    .scroll-cue {
-      position: fixed;
-      left: 50%;
-      bottom: 16px;
-      transform: translateX(-50%);
-      color: var(--muted);
-      font-size: .95rem;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      z-index: 10;
-      cursor: pointer;
-    }
-
-    .scroll-cue:focus-visible {
-      outline: 2px solid #93c5fd;
-      outline-offset: 2px;
-    }
-
-    .scroll-link {
-      text-decoration: none;
-      color: inherit;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      cursor: pointer;
-    }
-
-    .chev-wrap {
-      width: 44px;
-      height: 44px;
-      border-radius: 999px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 1.5px solid #d1d5db;
-      background: linear-gradient(180deg, #fff, #f8fafc);
-      box-shadow: 0 2px 10px rgba(0, 0, 0, .06);
-      animation: bounce 1.4s infinite ease-in-out;
-    }
-
-    .chev {
-      width: 18px;
-      height: 18px;
-      stroke: #374151;
-    }
-
-    .mini-nav {
-      position: sticky;
-      top: 0;
-      z-index: 40;
-      backdrop-filter: blur(6px);
-      background: rgba(255, 255, 255, .72);
-      border-bottom: 1px solid rgba(0, 0, 0, .06);
-      padding: 8px 12px;
-      display: flex;
-      gap: 14px;
-      justify-content: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity .2s ease;
-    }
-
-    .mini-nav.show {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .mini-nav a {
-      text-decoration: none;
-      color: #1f2937;
-      font-weight: 600;
-    }
-
-    .mini-nav a:hover {
-      text-decoration: underline;
-    }
-
-    .gallery {
-      position: relative;
-    }
-
-    .gallery.centered {
-      /* margin: 32px auto; */
-      padding: 12px 16px;
-      border: 1px solid #e5e7eb;
-      border-radius: 14px;
-      background: #fff;
-      box-shadow: none;
-      overflow: hidden;
-      width: 100%;
-      /* max-width: 860px; */
-    }
-
-    .gallery.centered::before,
-    .gallery.centered::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      width: 48px;
-      pointer-events: none;
-    }
-
-    .gallery.centered::before {
-      left: 0;
-      background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 90%);
-    }
-
-    .gallery.centered::after {
-      right: 0;
-      background: linear-gradient(270deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 90%);
-    }
-
-    .gallery.centered .gallery-track {
-      display: flex;
-      gap: 20px;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      padding: 12px 18px 14px;
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-      cursor: grab;
-    }
-
-    .gallery-track:active {
-      cursor: grabbing;
-    }
-
-    .gallery-track::-webkit-scrollbar {
-      display: none;
-    }
-
-    .shot {
-      flex: 0 0 auto;
-      width: 320px;
-      aspect-ratio: 16/10;
-      height: auto;
-      border-radius: 12px;
-      overflow: hidden;
-      scroll-snap-align: center;
-      background: #f9fafb;
-      border: 2px solid #dbeafe;
-      transition: transform .25s ease;
-      position: relative;
-      box-shadow: none;
-    }
-
-    .shot.active {
-      transform: scale(1.12);
-      box-shadow: 0 16px 34px rgba(0, 0, 0, .18);
-      z-index: 1;
-      border-color: #93c5fd;
-    }
-
-    .shot img,
-    .shot video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .cap {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      padding: 8px 10px;
-      font-size: .9rem;
-      color: #fff;
-      background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, .58) 90%);
-      opacity: 0;
-      transition: opacity .2s ease;
-    }
-
-    .shot:hover .cap,
-    .shot:focus-within .cap {
-      opacity: 1;
     }
 
     section {
@@ -385,66 +181,57 @@
       margin: 0 0 12px;
     }
 
-    .kws {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .kw {
-      font-size: .98rem;
-      padding: 6px 10px;
-      border: 1px solid #e5e7eb;
-      border-radius: 999px;
+    /* ------- Carded <figure> (unified) ------- */
+    figure.card {
+      position: relative;
+      margin: 0;
+      /* control margins inline if needed */
+      padding: var(--fig-pad);
       background: #fff;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      /* clip children to the rounded card */
+      line-height: normal;
     }
 
-    .kw[aria-selected="true"] {
-      background: #eef2ff;
-      border-color: #93c5fd;
-      box-shadow: 0 1px 6px rgba(59, 130, 246, .25);
+    /* Inner media wrapper: inherits radius, no fake borders */
+    .media {
+      position: relative;
+      border-radius: inherit;
+      overflow: hidden;
+      isolation: isolate;
+      background: #fff;
+      /* IMPORTANT: remove the previous fake border that created a square edge */
+      box-shadow: none !important;
+      /* Helps WebKit/Skia keep corners crisp with scaling */
+      -webkit-mask-image: radial-gradient(#000 98%, transparent 101%);
+      mask-image: radial-gradient(#000 98%, transparent 101%);
     }
 
-    .kw:active {
-      transform: scale(0.97);
-    }
-
-    @keyframes tagpulse {
-      0% {
-        transform: scale(1)
-      }
-
-      40% {
-        transform: scale(1.05)
-      }
-
-      100% {
-        transform: scale(1)
-      }
-    }
-
-    .kw.pulse {
-      animation: tagpulse .18s ease;
-    }
-
-    .spacer {
-      height: 28px;
-    }
-
-    footer {
-      text-align: center;
-      color: var(--muted);
-      margin-top: 36px;
-    }
-
-    /* Force title to exactly two lines */
-    h1.title .tline {
+    /* Actual media */
+    .media>img,
+    .media>video,
+    .media>canvas {
       display: block;
-      white-space: nowrap;
+      width: 100%;
+      height: auto;
+      border: 0;
+      outline: 0;
+      border-radius: inherit;
+      /* propagate radius to bitmap edges */
+      /* Overdraw 1px to kill AA seams without reintroducing a visible border */
+      transform: translateZ(0);
     }
 
-    /* Paper section styles */
+    /* Simple “edge-bleed-x” utility for teaser/pipeline videos that should touch card edges */
+    .bleed-x {
+      width: calc(100% + (var(--fig-pad)*2));
+      margin-left: calc(-1*var(--fig-pad));
+      margin-right: calc(-1*var(--fig-pad));
+    }
+
+    /* Paper section */
     .paper-row {
       display: flex;
       gap: 20px;
@@ -458,7 +245,6 @@
       max-width: 380px;
       display: block;
       padding: 0 46px 0 0;
-      /* reserve space for layered shadow on the right */
     }
 
     .paper-info {
@@ -469,58 +255,21 @@
     }
 
     .layered-paper-big {
-      /* modified from: http://css-tricks.com/snippets/css/layered-paper/ */
-      box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.35),
-        /* The top layer shadow */
-        5px 5px 0 0px #fff,
-        /* The second layer */
-        5px 5px 1px 1px rgba(0, 0, 0, 0.35),
-        /* The second layer shadow */
-        10px 10px 0 0px #fff,
-        /* The third layer */
-        10px 10px 1px 1px rgba(0, 0, 0, 0.35),
-        /* The third layer shadow */
-        15px 15px 0 0px #fff,
-        /* The fourth layer */
-        15px 15px 1px 1px rgba(0, 0, 0, 0.35),
-        /* The fourth layer shadow */
-        20px 20px 0 0px #fff,
-        /* The fifth layer */
-        20px 20px 1px 1px rgba(0, 0, 0, 0.35),
-        /* The fifth layer shadow */
-        25px 25px 0 0px #fff,
-        /* The fifth layer */
-        25px 25px 1px 1px rgba(0, 0, 0, 0.35);
-      /* The fifth layer shadow */
+      box-shadow:
+        0 0 1px 1px rgba(0, 0, 0, .35),
+        5px 5px 0 0 #fff, 5px 5px 1px 1px rgba(0, 0, 0, .35),
+        10px 10px 0 0 #fff, 10px 10px 1px 1px rgba(0, 0, 0, .35),
+        15px 15px 0 0 #fff, 15px 15px 1px 1px rgba(0, 0, 0, .35),
+        20px 20px 0 0 #fff, 20px 20px 1px 1px rgba(0, 0, 0, .35),
+        25px 25px 0 0 #fff, 25px 25px 1px 1px rgba(0, 0, 0, .35);
       margin-left: 10px;
       margin-right: 0;
     }
 
-    /* Disable center zoom/selection effect */
-    .shot.active {
-      transform: none;
-      box-shadow: none;
-      z-index: auto;
-      border-color: #dbeafe;
-    }
-
-    .video-frame {
-      border-radius: 12px;
-      /* or whatever looks right */
-      overflow: hidden;
-      /* clips the video and removes the halo */
-      background: #fff;
-      /* matches the card so any AA blends perfectly */
-    }
-
-    .video-frame>video {
-      display: block;
-      /* removes inline-gap */
-      width: 100%;
-      height: auto;
-      border: 0;
-      outline: 0;
-      /* no border-radius on the video itself */
+    footer {
+      text-align: center;
+      color: var(--muted);
+      margin-top: 36px;
     }
   </style>
 </head>
@@ -529,13 +278,14 @@
   <div class="wrap">
     <header class="hero">
       <div class="header-card">
-        <h1 class="title reveal d0">
+        <h1 class="title">
           <span class="tline">X-Diffusion: Training Diffusion Policies on</span>
           <span class="tline">Cross-Embodiment Human Demonstrations</span>
         </h1>
-        <div class="authors-group reveal d1">
+
+        <div class="authors-group">
           <div class="authors-row">
-            <span class="author-chip"><a href="https://www.maximuspace.com/" target="_blank" rel="noopener">Maximus A.
+            <span class="author-chip"><a href="https://www.maximusace.com/" target="_blank" rel="noopener">Maximus A.
                 Pace</a><sup>*</sup></span>
             <span class="author-chip"><a href="https://pdan101.github.io" target="_blank" rel="noopener">Prithwish
                 Dan</a><sup>*</sup></span>
@@ -553,158 +303,106 @@
                 Kedia</a><sup>†</sup></span>
           </div>
         </div>
-        <div class="seal reveal d2"><img src="cornell-seal.jpg" alt="Cornell University" /></div>
+
+        <div class="seal"><img src="cornell-seal.jpg" alt="Cornell University" /></div>
       </div>
 
-      <nav class="cta reveal d3" aria-label="Links">
+      <nav class="cta" aria-label="Links">
         <a class="btn" href="X-Diffusion.pdf" target="_blank" rel="noopener">📄 Paper</a>
         <!-- <a class="btn secondary" href="#abstract">🧠 Abstract</a> -->
         <a class="btn" href="https://arxiv.org/abs/2510.11111" target="_blank" rel="noopener"><img
             src="media/arxiv-logomark-small.svg" alt="arXiv" width="16" height="16" /> arXiv</a>
         <a class="btn" href="https://github.com/portal-cornell/X-Diffusion" target="_blank" rel="noopener"><img
-            src="media/github-mark-white.svg" alt="GitHub" width="16" height="16" /> Code
-          (Coming Soon)</a>
+            src="media/github-mark-white.svg" alt="GitHub" width="16" height="16" /> Code (Coming Soon)</a>
       </nav>
-
     </header>
 
-    <!-- One-sentence summary -->
-    <!-- <nav class="mini-nav" aria-label="Section navigation">
-      <a href="#rollouts">Per-Task Feasibility Rollouts</a>
-      <a href="#abstract">Abstract</a>
-      <a href="#approach">Approach</a>
-      <a href="#results">Key Results</a>
-      <a href="#paper">Paper</a>
-    </nav> -->
-
     <!-- Intro video -->
-    <div class="teaser reveal d5" style="width:100%;">
-      <figure
-        style="text-align:center; margin:0 0 16px 0; width:100%; border-radius:12px; box-shadow: var(--shadow); border:1px solid #e5e7eb; display:block; padding:20px 20px; background:#fff;">
-        <div class="summary-text" style="margin:0 0 16px 0; font-weight:800; font-size:1.35rem; letter-spacing:.1px;">
-          X-Diffusion
-          selectively incorporates noised human actions into Diffusion Policy training</div>
-        <video src="media/Teaser_video.mov" alt="Intro Teaser" muted playsinline autoplay
-          style="width:100%; height:auto;"></video>
+    <div class="teaser" style="width:100%; margin-bottom:0;">
+      <figure class="card">
+        <div class="summary-text" style="margin:0 0 16px 0;font-weight:800;font-size:1.35rem;letter-spacing:.1px;">
+          X-Diffusion selectively incorporates noised human actions into Diffusion Policy training
+        </div>
+        <div class="media">
+          <video class="bleed-x" src="media/Teaser_video.mov" alt="Intro Teaser" muted playsinline autoplay></video>
+        </div>
       </figure>
     </div>
 
-    <!-- Abstract -->
-    <section id="abstract">
-      <h2>Abstract</h2>
-      <div class="summary-box" style="width:100%;">
-        <div class="summary-text" style="text-align:justify;">
-          <p style="padding: 0px 20px;">Human videos can be recorded quickly and at scale, making them an appealing
-            source of training data for
-            robot learning. However, humans and robots differ fundamentally in embodiment, resulting in mismatched
-            action execution. Direct kinematic retargeting of human hand motion can therefore produce actions that are
-            physically infeasible for robots. Despite these low-level differences, human demonstrations provide
-            valuable motion cues about how to manipulate and interact with objects. Our key idea is to exploit the
-            forward diffusion process: as noise is added to actions, low-level execution differences fade while
-            high-level task guidance is preserved. We present X-Diffusion, a principled framework for training
-            diffusion policies that maximally leverages human data without learning dynamically infeasible motions.
-            X-Diffusion first trains a classifier to predict whether a noisy action is executed by a human or robot.
-            Then, a human action is incorporated into policy training only after adding sufficient noise such that the
-            classifier cannot discern its embodiment. Actions consistent with robot execution supervise fine-grained
-            denoising at low noise levels, while mismatched human actions provide only coarse guidance at higher noise
-            levels. Our experiments show that naive co-training under execution mismatches degrades policy
-            performance, while X-Diffusion consistently improves it. Across five manipulation tasks, X-Diffusion
-            achieves a 16% higher average success rate than the best baseline.</p>
-        </div>
-      </div>
-    </section>
-
+    <!-- Motivation -->
     <section id="Motivation">
-      <h2>Humans Behave Differently from Robots</h2>
+      <h2>Robots and Humans Behave Differently</h2>
       <div class="summary-box"
-        style="width:100%; display:flex; flex-direction:row; gap:16px; align-items:stretch; justify-content:center; padding:20px;">
-        <video src="media/pp_hi_crop.mp4" alt="Push Plate Human" muted loop playsinline autoplay
-          style="width:calc(50% - 8px); height:auto; object-fit:contain;"></video>
+        style="width:100%;display:flex;flex-direction:row;gap:16px;align-items:stretch;justify-content:center;padding:20px;">
         <video src="media/pp_r_crop.mp4" alt="Push Plate Robot" muted loop playsinline autoplay
-          style="width:calc(50% - 8px); height:auto; object-fit:contain;"></video>
+          style="width:calc(50% - 8px);height:auto;object-fit:contain;"></video>
+        <video src="media/pp_hi_crop.mp4" alt="Push Plate Human" muted loop playsinline autoplay
+          style="width:calc(50% - 8px);height:auto;object-fit:contain;"></video>
       </div>
-      <!-- <h2>Naively Training on Human Data Causes Infeasible Robot Motions</h2>
-      <div class="summary-box"
-        style="width:50%; display:flex; flex-direction:row; gap:16px; align-items:stretch; margin:0 auto;">
-        <video src="media/pp_hi_rollout.mp4" alt="Push Plate Human" muted loop playsinline autoplay
-          style="width:100%; height:auto;"></video>
-      </div> -->
-      <h2>Adding Noise Makes Human and Robot Actions Indistinguishable</h2>
-      <!-- <div class="summary-box" style="width:100%; display:flex; flex-direction:row; gap:16px; align-items:stretch;"> -->
-      <!-- <video src="media/long_teaser.mov" alt="Push Plate Human" muted loop playsinline autoplay
-          style="width:100%; height:auto;"></video> -->
-      <iframe id="noise-demo-iframe" src="./noise_demo.html" width="100%" height="820"
-        style="border:0; display:block; border-radius:12px; box-shadow: var(--shadow); border:1px solid #e5e7eb; background:#fff; overflow:hidden; padding:20px;">
-      </iframe>
-      <!-- </div> -->
     </section>
 
+    <!-- Noise demo -->
+    <section id="Noise">
+      <h2>Adding Noise Makes Human and Robot Actions Indistinguishable</h2>
+      <div style="width:100%;display:flex;flex-direction:column;gap:16px;align-items:stretch;">
+        <iframe id="noise-demo-pp" src="./noise_demo.html?task=push_plate&frameId=noise-demo-pp" width="100%"
+          height="820"
+          style="border:0;display:block;border-radius:12px;box-shadow:var(--shadow);border:1px solid #e5e7eb;background:#fff;overflow:hidden;padding:20px;">
+        </iframe>
+        <!-- <iframe id="noise-demo-se" ... ></iframe> -->
+      </div>
+    </section>
 
-    <!-- Scroll cue -->
-    <!-- <div class="scroll-cue reveal d6" role="button" tabindex="0" aria-label="Scroll to content">
-      <a class="scroll-link" href="#content-start">
-        <span>Scroll for more</span>
-        <div class="chev-wrap">
-          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-            stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="6 9 12 15 18 9"></polyline>
-          </svg>
-        </div>
-      </a>
-    </div> -->
-
-    <!-- Approach Overview with figures -->
+    <!-- Approach -->
     <section id="approach">
       <h2>X-Diffusion Pipeline</h2>
-      <div class="summary-box" style="width:100%; display:flex; flex-direction:row; gap:16px; align-items:stretch;">
-        <video src="media/pipeline_video.mov" alt="Pipeline" muted loop playsinline autoplay
-          style="width:100%; height:auto;"></video>
-      </div>
+      <figure class="card">
+        <div class="media">
+          <video class="bleed-x" src="media/pipeline_video.mov" alt="Pipeline" muted loop playsinline autoplay></video>
+        </div>
+      </figure>
       <p>We convert human videos into <strong>robot-aligned state-action pairs</strong> using 3D hand-pose estimation
         and lightweight retargeting, and reduce the visual gap with object masks and keypoint overlays.</p>
       <p>Adding noise suppresses embodiment-specific details while preserving task intent. We <strong>use a
           human-vs-robot classifier</strong> to find the earliest noise level where human actions are
         <strong>indistinguishable</strong> from robot actions and treat them as safe supervision.
       </p>
-      <!-- <figure style="margin:8px 0 0 0">
-        <img src="media/fig6.pdf" alt="Classifier gate"
-          style="width:60%; border-radius:12px; box-shadow: var(--shadow); border:1px solid #e5e7eb; display:block; margin:0 auto; background:#fff; padding:20px 20px;" />
-      </figure> -->
     </section>
 
-    <!-- Key Results with figures/videos -->
+    <!-- Results -->
     <section id="results">
       <h2>Key Results</h2>
 
-      <h3>1) X-Diffusion can training on all human data, while naively training on all human data
-        leads to infeasible robot motions</h3>
-      <p>We compare <strong>X-Diffusion</strong> with <em>FILTERED</em> (robot-verified human
-        demos only), <em>NAIVE</em> (all human data), and <em>ROBOT</em> (robot-only) and find <strong>consistent
-          gains on every task</strong>.</p>
+      <h3>1) X-Diffusion can train on all human data, while naively training on all human data leads to infeasible robot
+        motions</h3>
+      <p>We compare <strong>X-Diffusion</strong> with <em>FILTERED</em> (robot-verified human demos only),
+        <em>NAIVE</em> (all human data), and <em>ROBOT</em> (robot-only) and find <strong>consistent gains on every
+          task</strong>.
+      </p>
 
-      <!-- <figure style="margin:0 0 18px 0;">
-        <img src="media/Baselines.pdf" alt="Naive vs X-Diffusion"
-          style="width:100%; border-radius:12px; box-shadow: var(--shadow); border:1px solid #e5e7eb;" />
-      </figure> -->
-      <div class="summary-box" style="width:100%; display:flex; flex-direction:row; gap:16px; align-items:stretch;">
-        <video src="media/Baseline_video.mov" alt="Naive vs X-Diffusion" muted loop playsinline autoplay
-          style="width:100%; height:auto;"></video>
-      </div>
+      <figure class="card">
+        <div class="media">
+          <img src="media/baselines.png" alt="Naive vs X-Diffusion" />
+        </div>
+      </figure>
 
       <h3>2) X-Diffusion outperforms prior cross-embodiment learning baselines</h3>
       We demonstrate empirically that <strong>X-Diffusion</strong> outperforms other cross-embodiment learning
       baselines <strong>across all tasks</strong>, which see either <strong>small performance gains</strong> or
       <strong>degraded performance</strong> when using all human data.
-      <figure style="margin:0 0 18px 0;">
-        <img src="media/fig4.png" alt="Task-wise success vs. baselines"
-          style="width:100%; border-radius:12px; padding:10px 10px; background:#fff;" />
+
+      <!-- This is the one that previously showed the squared image cutting the rounded shadow.
+           The media wrapper + border-radius:inherit fixes it. -->
+      <figure class="card" style="margin:0 0 18px 0;">
+        <div class="media">
+          <img src="media/fig4.png" alt="Task-wise success vs. baselines" />
+        </div>
       </figure>
     </section>
 
     <!-- Paper links / BibTeX -->
     <section class="section">
       <div class="container is-max-desktop">
-
         <div class="columns is-centered has-text-centered">
           <div class="column" id="Paper">
             <h2 class="title is-3">Paper</h2>
@@ -715,9 +413,9 @@
                 </a>
               </div>
               <div class="paper-info">
-                <h3 class="title is-4" style="text-align: center;">BibTex</h3>
+                <h3 class="title is-4" style="text-align:center;">BibTex</h3>
                 <pre
-                  style="background:#0b1020; color:#e5e7eb; padding:14px 16px; border-radius:12px; overflow:auto; font-size:.9rem;">@unpublished{pace2026xdiffusion,
+                  style="background:#0b1020;color:#e5e7eb;padding:14px 16px;border-radius:12px;overflow:auto;font-size:.9rem;">@unpublished{pace2026xdiffusion,
   title        = {X-Diffusion: Training Diffusion Policies on Cross-Embodiment Human Demonstrations},
   author       = {Pace, Maximus A. and Dan, Prithwish and Ning, Chuanruo and Bhardwaj, Atiksh and Du, Audrey and Duan, Edward W. and Ma, Wei-Chiu and Kedia, Kushal},
   note         = {Manuscript under review},
@@ -727,36 +425,17 @@
             </div>
           </div>
         </div>
+      </div>
     </section>
-
 
     <footer>
       <small>* equal contribution. † corresponding author(s)</small>
       <br><small>© 2025 X-Diffusion Authors</small>
     </footer>
   </div>
-  </div>
-
-  <!-- Lightbox modal -->
-  <div id="lightbox"
-    style="position:fixed; inset:0; background:rgba(0,0,0,.6); display:none; align-items:center; justify-content:center; z-index:50;">
-    <div id="lightbox-content"
-      style="max-width:92vw; max-height:90vh; border-radius:14px; box-shadow:0 12px 40px rgba(0,0,0,.4); overflow:hidden; background:#000;">
-    </div>
-  </div>
 
   <script>
-    // Smooth-scroll cue to #content-start + keyboard support
-    (function () {
-      const cue = document.querySelector('.scroll-cue');
-      const target = document.getElementById('content-start');
-      if (!cue || !target) return;
-      const go = () => target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      cue.addEventListener('click', (e) => { if (e.target.closest('a')) return; go(); });
-      cue.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } });
-    })();
-
-    // Sticky mini-nav visibility after hero
+    // Sticky mini-nav visibility after hero (kept in case you re-enable the mini-nav)
     (function () {
       const hero = document.querySelector('.hero');
       const nav = document.querySelector('.mini-nav');
@@ -771,132 +450,13 @@
       toggle();
     })();
 
-    // Lightbox for images & video (click to pop out)
-    (function () {
-      const lb = document.getElementById('lightbox');
-      const content = document.getElementById('lightbox-content');
-      if (!lb || !content) return;
-      function openWith(el) {
-        content.innerHTML = '';
-        if (el.tagName.toLowerCase() === 'img') {
-          const img = el.cloneNode();
-          img.removeAttribute('loading');
-          img.style.maxWidth = '92vw'; img.style.maxHeight = '90vh'; img.style.display = 'block';
-          content.appendChild(img);
-        } else if (el.tagName.toLowerCase() === 'video') {
-          const v = document.createElement('video');
-          v.src = el.currentSrc || el.src; v.controls = true; v.autoplay = true; v.playsInline = true; v.loop = true; v.muted = false;
-          v.style.maxWidth = '92vw'; v.style.maxHeight = '90vh';
-          content.appendChild(v);
-        }
-        lb.style.display = 'flex';
-      }
-      const tv = document.getElementById('teaser-video'); if (tv) { tv.addEventListener('click', () => openWith(tv)); }
-      document.querySelectorAll('.gallery .shot img, .gallery .shot video').forEach(el => el.addEventListener('click', () => openWith(el)));
-      lb.addEventListener('click', (e) => { if (e.target === lb) lb.style.display = 'none'; });
-      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') lb.style.display = 'none'; });
-    })();
-  </script>
-
-  <!-- Auto-play & center-highlight for ALL galleries -->
-  <script>
-    (function () {
-      function initTrack(track) {
-        if (!track) return;
-        const vids = Array.from(track.querySelectorAll('video'));
-        vids.forEach(v => {
-          v.muted = true;
-          v.playsInline = true;
-          v.loop = true;
-        });
-        // Try to play all videos together
-        const playAll = () => vids.forEach(v => v.play().catch(() => { }));
-        // Start immediately and also when any one is ready
-        requestAnimationFrame(playAll);
-        vids.forEach(v => v.addEventListener('canplay', playAll, { once: true }));
-        // Remove active toggling/scroll handlers
-      }
-
-      function initAllTracks(scope) {
-        const root = scope || document;
-        root.querySelectorAll('.gallery .gallery-track').forEach(initTrack);
-      }
-
-      window.__refreshGalleryCenterPlay = function (scopeEl) {
-        initAllTracks(scopeEl || document);
-      };
-
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => initAllTracks());
-      } else {
-        initAllTracks();
-      }
-    })();
-  </script>
-
-  <!-- Task tag toggling (rollouts + co-training) with gallery refresh -->
-  <script>
-    // Rollouts task tabs
-    (function () {
-      const tagBar = document.getElementById('task-tags');
-      if (!tagBar) return;
-      const map = {
-        drawer: document.getElementById('task-drawer'),
-        egg: document.getElementById('task-egg'),
-        plate: document.getElementById('task-plate'),
-        mug: document.getElementById('task-mug'),
-        bottle: document.getElementById('task-bottle')
-      };
-      function show(which) {
-        Object.values(map).forEach(el => el && (el.style.display = 'none'));
-        const target = map[which];
-        if (target) {
-          target.style.display = 'block';
-          if (window.__refreshGalleryCenterPlay) window.__refreshGalleryCenterPlay(target);
-        }
-        tagBar.querySelectorAll('.kw').forEach(b => b.setAttribute('aria-selected', String(b.dataset.task === which)));
-      }
-      tagBar.addEventListener('click', (e) => {
-        const b = e.target.closest('.kw');
-        if (!b) return;
-        b.classList.remove('pulse'); void b.offsetWidth; b.classList.add('pulse');
-        show(b.dataset.task);
-      });
-      show('drawer');
-    })();
-
-    // Co-training result tabs
-    (function () {
-      const bar = document.getElementById('co-tags');
-      if (!bar) return;
-      const map = {
-        mug: document.getElementById('co-mug'),
-        egg: document.getElementById('co-egg'),
-        plate: document.getElementById('co-plate')
-      };
-      function show(which) {
-        Object.values(map).forEach(el => el && (el.style.display = 'none'));
-        const target = map[which];
-        if (target) {
-          target.style.display = 'block';
-          if (window.__refreshGalleryCenterPlay) window.__refreshGalleryCenterPlay(target);
-        }
-        bar.querySelectorAll('.kw').forEach(b => b.setAttribute('aria-selected', String(b.dataset.co === which)));
-      }
-      bar.addEventListener('click', (e) => {
-        const b = e.target.closest('.kw');
-        if (!b) return;
-        b.classList.remove('pulse'); void b.offsetWidth; b.classList.add('pulse');
-        show(b.dataset.co);
-      });
-      show('mug');
-    })();
-  </script>
-  <script>
+    // Auto-resize the noise demo iframe
     window.addEventListener('message', (event) => {
-      if (event.data && event.data.id === 'noise-demo') {
-        const iframe = document.getElementById('noise-demo-iframe');
-        if (iframe) iframe.style.height = event.data.height + 'px';
+      if (event.data && event.data.id === 'noise-demo' && event.data.frameId) {
+        const iframe = document.getElementById(event.data.frameId);
+        if (iframe && typeof event.data.height === 'number') {
+          iframe.style.height = event.data.height + 'px';
+        }
       }
     });
   </script>

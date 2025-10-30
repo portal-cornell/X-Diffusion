@@ -1,4 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
+  /* TASK from query (?task=serve_egg | push_plate); default serve_egg */
+  const params = new URLSearchParams(location.search);
+  const task = (params.get('task') || 'serve_egg').toLowerCase();
+
   /* COLORS */
   const colors = { orange: "#db923c", green: "#91db7b", blue: "#0369a1" };
   const pointStroke = { orange: "#c2410c", green: "#bbf7d0", blue: "#0ea5e9" };
@@ -9,48 +13,95 @@ document.addEventListener('DOMContentLoaded', () => {
   const MID_IDX = samplesPerSeg;
   const END_IDX = 2 * samplesPerSeg;
 
-  /* CONTROL POINTS (your current) */
+  /* CONTROL POINTS (by task) */
   const control = {
-    orange: [
-      [[396, 178], [154, 220], [200, 408]],
-      [[994, 232], [788, 298], [848, 442]],
-      [[1686, 278], [1560, 404], [1472, 488]],
-    ],
-    green: [
-      [[422, 314], [194, 302], [220, 480]],
-      [[1018, 310], [822, 374], [882, 508]],
-      [[1622, 314], [1520, 416], [1429, 510]]
-    ],
-    blue: [
-      [[374, 304], [128, 302], [156, 478]],
-      [[968, 302], [766, 374], [822, 512]],
-      [[1580, 288], [1484, 396], [1398, 480]]
-    ]
+    serve_egg: {
+      orange: [
+        [[396, 178], [154, 220], [200, 408]],
+        [[994, 232], [788, 298], [848, 442]],
+        [[1686, 278], [1560, 404], [1472, 488]],
+      ],
+      green: [
+        [[422, 314], [194, 302], [220, 480]],
+        [[1018, 310], [822, 374], [882, 508]],
+        [[1622, 314], [1520, 416], [1429, 510]]
+      ],
+      blue: [
+        [[374, 304], [128, 302], [156, 478]],
+        [[968, 302], [766, 374], [822, 512]],
+        [[1580, 288], [1484, 396], [1398, 480]]
+      ]
+    },
+    push_plate: {
+      orange: [
+        [[136, 404], [304, 380], [418, 370]],
+        [[722, 418], [908, 402], [1034, 396]],
+        [[1346, 460], [1536, 328], [1636, 424]]
+      ],
+      green: [
+        [[170, 526], [308, 518], [416, 500]],
+        [[774, 522], [940, 510], [1068, 492]],
+        [[1420, 490], [1572, 362], [1672, 454]]
+      ],
+      blue: [
+        [[88, 540], [244, 528], [356, 512]],
+        [[700, 490], [876, 476], [1006, 472]],
+        [[1376, 528], [1502, 362], [1604, 450]]
+      ]
+    }
   };
 
-  /* HARDCODED TARGETS (your current) */
+  /* HARDCODED TARGETS (by task) */
   const hardcodedTargets = {
-    orange: [
-      [[370, 136], [244, 212], [266, 428]],
-      [[1020, 194], [875, 318], [956, 488]],
-      [[1692, 212], [1496, 382], [1488, 540]],
-    ],
-    green: [
-      [[476, 254], [282, 332], [248, 570]],
-      [[1098, 308], [932, 386], [914, 562]],
-      [[1656, 342], [1530, 440], [1398, 622]],
-    ],
-    blue: [
-      [[308, 236], [96, 322], [96, 484]],
-      [[932, 270], [758, 370], [784, 594]],
-      [[1570, 280], [1442, 326], [1310, 516]],
-    ]
+    serve_egg: {
+      orange: [
+        [[370, 136], [244, 212], [266, 428]],
+        [[1020, 194], [875, 318], [956, 488]],
+        [[1692, 212], [1496, 382], [1488, 540]],
+      ],
+      green: [
+        [[476, 254], [282, 332], [248, 570]],
+        [[1098, 308], [932, 386], [914, 562]],
+        [[1656, 342], [1530, 440], [1398, 622]],
+      ],
+      blue: [
+        [[308, 236], [96, 322], [96, 484]],
+        [[932, 270], [758, 370], [784, 594]],
+        [[1570, 280], [1442, 326], [1310, 516]],
+      ]
+    },
+    push_plate: {
+      orange: [
+        [[78, 394], [310, 446], [502, 470]],
+        [[702, 472], [902, 454], [988, 456]],
+        [[1386, 442], [1538, 448], [1696, 498]],
+      ],
+      green: [
+        [[138, 412], [390, 454], [510, 510]],
+        [[758, 408], [948, 420], [1050, 472]],
+        [[1380, 506], [1548, 472], [1664, 448]],
+      ],
+      blue: [
+        [[114, 574], [360, 412], [506, 484]],
+        [[674, 550], [892, 442], [1098, 432]],
+        [[1352, 472], [1516, 410], [1642, 430]],
+      ]
+    }
   };
 
-  /* BACKGROUND SETS */
+  /* Active sets (validate task) */
+  const activeControl = control[task] || control.serve_egg;
+  const activeTargets = hardcodedTargets[task] || hardcodedTargets.serve_egg;
+
+  /* BACKGROUND SETS — prefix by task: se_ or pp_ */
+  const prefix = task === 'push_plate' ? 'pp' : 'se';
   const bgSets = {
-    on: ['media/noise_demo_imgs/img0.png', 'media/noise_demo_imgs/img1.png', 'media/noise_demo_imgs/img2.png'],
-    off: ['media/noise_demo_imgs/white0.png', 'media/noise_demo_imgs/white1.png', 'media/noise_demo_imgs/white2.png'],
+    on: [`media/noise_demo_imgs/${prefix}_img0.png`,
+    `media/noise_demo_imgs/${prefix}_img1.png`,
+    `media/noise_demo_imgs/${prefix}_img2.png`],
+    off: [`media/noise_demo_imgs/${prefix}_white0.png`,
+    `media/noise_demo_imgs/${prefix}_white1.png`,
+    `media/noise_demo_imgs/${prefix}_white2.png`],
   };
 
   /* STATE */
@@ -69,16 +120,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const paths = { orange: [], green: [], blue: [] };
   const pointGroups = { orange: make('g', {}), green: make('g', {}), blue: make('g', {}) };
 
-  for (const k of Object.keys(colors)) {
-    for (let i = 0; i < control[k].length; i++) {
-      const p = make('path', { class: 'track', stroke: colors[k], d: '' });
+  /* Build paths for colors present in this task */
+  for (const color of Object.keys(activeControl)) {
+    for (let i = 0; i < activeControl[color].length; i++) {
+      const p = make('path', { class: 'track', stroke: colors[color], d: '' });
       svg.appendChild(p);
-      paths[k].push(p);
+      paths[color].push(p);
     }
-    svg.appendChild(pointGroups[k]);
+    svg.appendChild(pointGroups[color]);
   }
 
-  /* Background sizing (no opacity toggle anymore) */
+  /* Background sizing */
   function fitSVGToImage() {
     const w = bgEl.naturalWidth || bgEl.width, h = bgEl.naturalHeight || bgEl.height;
     if (w && h) svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
@@ -86,9 +138,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   if (bgEl.complete) { fitSVGToImage(); } else { bgEl.addEventListener('load', fitSVGToImage); }
 
-  /* INIT curves */
-  for (const k of Object.keys(control)) {
-    denseBase[k] = control[k].map(seg => sampleDense(seg, samplesPerSeg));
+  /* INIT curves for active task */
+  for (const color of Object.keys(activeControl)) {
+    denseBase[color] = activeControl[color].map(seg => sampleDense(seg, samplesPerSeg));
   }
   resampleNoiseWithSeed(currentSeed);
 
@@ -98,11 +150,11 @@ document.addEventListener('DOMContentLoaded', () => {
     slider.style.setProperty('--_pct', pct + '%');
   };
 
-  /* Bucket helper and background switcher */
+  /* Bucket helper and background switcher (0–33, 34–66, 67–100) */
   function bucketFor(val) {
     const v = Number(val);
-    if (v <= 45) return 0;
-    if (v <= 85) return 1;
+    if (v <= 33) return 0;
+    if (v <= 66) return 1;
     return 2;
   }
   function updateBackground() {
@@ -110,9 +162,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const idx = bucketFor(slider.value);
     const nextSrc = set[idx];
     if (bgEl.getAttribute('src') !== nextSrc) {
-      bgEl.src = nextSrc;     // fitSVGToImage will run on load
+      bgEl.src = nextSrc; // fitSVGToImage runs on load
     } else {
-      // ensure layout updates even if same src (e.g., first run)
       fitSVGToImage();
     }
   }
@@ -140,24 +191,26 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function redrawNoisy(sigma, tAnchor) {
-    for (const k of Object.keys(denseBase)) {
-      latestNoisy[k] = [];
-      denseBase[k].forEach((dense, segIdx) => {
+    for (const color of Object.keys(denseBase)) {
+      latestNoisy[color] = [];
+      denseBase[color].forEach((dense, segIdx) => {
         const out = new Array(dense.length);
         for (let i = 0; i < dense.length; i++) {
-          if (i === 0) {
-            out[i] = lerp2(dense[i], hardcodedTargets[k][segIdx][0], tAnchor);
-          } else if (i === MID_IDX) {
-            out[i] = lerp2(dense[i], hardcodedTargets[k][segIdx][1], tAnchor);
-          } else if (i === END_IDX) {
-            out[i] = lerp2(dense[i], hardcodedTargets[k][segIdx][2], tAnchor);
+          const tgtSet = (activeTargets[color] && activeTargets[color][segIdx]) || null;
+
+          if (i === 0 && tgtSet) {
+            out[i] = lerp2(dense[i], tgtSet[0], tAnchor);
+          } else if (i === MID_IDX && tgtSet) {
+            out[i] = lerp2(dense[i], tgtSet[1], tAnchor);
+          } else if (i === END_IDX && tgtSet) {
+            out[i] = lerp2(dense[i], tgtSet[2], tAnchor);
           } else {
-            const n = noiseVecs[k][segIdx][i];
+            const n = noiseVecs[color][segIdx][i];
             out[i] = [dense[i][0] + sigma * n[0], dense[i][1] + sigma * n[1]];
           }
         }
-        latestNoisy[k][segIdx] = out;
-        paths[k][segIdx].setAttribute('d', pathFromPoints(out));
+        latestNoisy[color][segIdx] = out;
+        paths[color][segIdx].setAttribute('d', pathFromPoints(out));
       });
     }
     drawControlPoints();
@@ -166,12 +219,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function drawControlPoints() {
     const r = 14;
-    for (const k of Object.keys(pointGroups)) {
-      const group = pointGroups[k];
+    for (const color of Object.keys(pointGroups)) {
+      const group = pointGroups[color];
+      if (!latestNoisy[color]) continue;
       group.innerHTML = '';
-      const fill = colors[k];
-      const stroke = pointStroke[k];
-      latestNoisy[k].forEach(noisySeg => {
+      const fill = colors[color];
+      const stroke = pointStroke[color];
+      latestNoisy[color].forEach(noisySeg => {
         if (!noisySeg || noisySeg.length < END_IDX + 1) return;
         const a = noisySeg[0];
         const b = noisySeg[MID_IDX];
@@ -188,8 +242,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function resampleNoiseWithSeed(seed) {
     const rng = mulberry32(seed);
-    for (const k of Object.keys(denseBase)) {
-      noiseVecs[k] = denseBase[k].map(denseSeg => denseSeg.map(() => gauss2(rng)));
+    for (const color of Object.keys(denseBase)) {
+      noiseVecs[color] = denseBase[color].map(denseSeg => denseSeg.map(() => gauss2(rng)));
     }
   }
 

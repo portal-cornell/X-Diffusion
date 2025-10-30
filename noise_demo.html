@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>X-Diffusion — Noise Demo</title>
 
-  <!-- Load Inter inside the iframe -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
 
   <style>
@@ -57,7 +56,7 @@
       margin: 0;
     }
 
-    /* Controls under the image */
+    /* Controls */
     #ui {
       margin-top: 12px;
       display: flex;
@@ -84,7 +83,6 @@
       letter-spacing: .1px;
     }
 
-    /* Slider styling */
     :root {
       --slider-h: 10px;
       --slider-radius: 999px;
@@ -168,7 +166,6 @@
       border-radius: 12px;
     }
 
-    /* Modern checkbox */
     #ui input[type="checkbox"] {
       appearance: none;
       -webkit-appearance: none;
@@ -180,7 +177,7 @@
       position: relative;
       cursor: pointer;
       background-color: #fff;
-      transition: all 0.15s ease;
+      transition: all .15s ease;
       vertical-align: middle;
     }
 
@@ -215,7 +212,8 @@
 <body>
   <div id="noise-demo-iframe">
     <div id="wrap">
-      <img id="bg" class="bg" src="media/prithwish_slide.png" alt="">
+      <!-- default will be overwritten by JS -->
+      <img id="bg" class="bg" src="media/noise_demo_imgs/se_img0.png" alt="">
       <svg id="svg" class="overlay"></svg>
     </div>
 
@@ -232,13 +230,22 @@
 
   <script src="scripts/noise_demo.js"></script>
   <script>
-    function sendHeight() {
-      const root = document.getElementById('noise-demo-iframe');
-      const h = root ? Math.ceil(root.getBoundingClientRect().height) : document.documentElement.scrollHeight;
-      window.parent.postMessage({ id: 'noise-demo', height: h }, '*');
-    }
-    window.addEventListener('load', sendHeight);
-    window.addEventListener('resize', sendHeight);
+    // Relay our measured height to the correct parent iframe
+    (function () {
+      const params = new URLSearchParams(location.search);
+      const frameId = params.get('frameId') || null;
+
+      function sendHeight() {
+        const root = document.getElementById('noise-demo-iframe');
+        const h = root ? Math.ceil(root.getBoundingClientRect().height) : document.documentElement.scrollHeight;
+        window.parent.postMessage({ id: 'noise-demo', frameId, height: h }, '*');
+      }
+      window.addEventListener('load', sendHeight);
+      window.addEventListener('resize', sendHeight);
+
+      // Expose so the JS module can trigger after dynamic changes
+      window.__sendNoiseDemoHeight = sendHeight;
+    })();
   </script>
 </body>
 
