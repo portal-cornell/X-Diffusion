@@ -8,13 +8,27 @@ document.addEventListener('DOMContentLoaded', () => {
   const pointStroke = { orange: "#c2410c", green: "#bbf7d0", blue: "#0ea5e9" };
 
   /* CONFIG */
-  const maxSigma = 25;
-  const samplesPerSeg = 7;
+  const maxSigma = 23;
+  const samplesPerSeg = 8;
   const MID_IDX = samplesPerSeg;
   const END_IDX = 2 * samplesPerSeg;
 
   /* CONTROL POINTS (by task) */
   const control = {
+    teaser: {
+      orange: [
+        [[119, 100], [653, 76], [1128, 57]],
+        [[59, 641], [523, 511], [1109, 625]]
+      ],
+      green: [
+        [[142, 212], [665, 189], [1135, 164]],
+        [[130, 669], [600, 524], [1182, 638]]
+      ],
+      blue: [
+        [[79, 224], [609, 204], [1084, 174]],
+        [[98, 699], [576, 556], [1155, 672]]
+      ]
+    },
     serve_egg: {
       orange: [
         [[396, 178], [154, 220], [200, 408]],
@@ -53,6 +67,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* HARDCODED TARGETS (by task) */
   const hardcodedTargets = {
+    teaser: {
+      orange: [
+        [[114, 120], [697, 50], [1186, 95]],
+        [[75, 542], [567, 499], [1136, 525]]
+      ],
+      green: [
+        [[205, 182], [709, 146], [1179, 206]],
+        [[161, 634], [646, 549], [1135, 675]]
+      ],
+      blue: [
+        [[103, 240], [646, 214], [1051, 120]],
+        [[89, 690], [576, 615], [1040, 589]]
+      ]
+    },
     serve_egg: {
       orange: [
         [[370, 136], [244, 212], [266, 428]],
@@ -94,7 +122,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const activeTargets = hardcodedTargets[task] || hardcodedTargets.serve_egg;
 
   /* BACKGROUND SETS — prefix by task: se_ or pp_ */
-  const prefix = task === 'push_plate' ? 'pp' : 'se';
+  let prefix;
+  if (task === 'teaser')
+    prefix = 'teaser';
+  else if (task === 'push_plate')
+    prefix = 'pp';
+  else
+    prefix = 'se';
+
   const bgSets = {
     on: [`media/noise_demo_imgs/${prefix}_img0.png`,
     `media/noise_demo_imgs/${prefix}_img1.png`,
@@ -105,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   /* STATE */
-  let currentSeed = 1522;
+  let currentSeed = 1526;
   const denseBase = { orange: [], green: [], blue: [] };
   const noiseVecs = { orange: [], green: [], blue: [] };
   const latestNoisy = { orange: [], green: [], blue: [] };

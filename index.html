@@ -9,7 +9,6 @@
     content="X-Diffusion: Training Diffusion Policies on Cross-Embodiment Human Demonstrations." />
   <link rel="icon" href="icon.jpg" type="image/jpg" />
   <link rel="shortcut icon" href="icon.jpg" type="image/jpg" />
-
   <style>
     :root {
       --bg-start: #ffffff;
@@ -28,18 +27,18 @@
       margin: 0;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;
       color: var(--fg);
-      line-height: 1.75;
+      line-height: 1.75
     }
 
     body {
       background: linear-gradient(180deg, var(--bg-start) 0%, var(--bg-end) 100%);
-      background-attachment: fixed;
+      background-attachment: fixed
     }
 
     .wrap {
       max-width: var(--maxw);
       margin: 0 auto;
-      padding: 40px 20px;
+      padding: 40px 20px
     }
 
     .hero {
@@ -47,19 +46,19 @@
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
-      text-align: center;
+      text-align: center
     }
 
     h1.title {
       font-size: clamp(32px, 4.8vw, 52px);
       font-weight: 800;
       line-height: 1.1;
-      margin: 0 0 12px;
+      margin: 0 0 12px
     }
 
     h1.title .tline {
       display: block;
-      white-space: nowrap;
+      white-space: nowrap
     }
 
     .header-card {
@@ -69,21 +68,21 @@
       border-radius: 16px;
       background: linear-gradient(180deg, #fff, #f7f9fc);
       box-shadow: var(--shadow);
-      margin: 20px auto 24px;
+      margin: 20px auto 24px
     }
 
     .authors-group {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 8px;
+      gap: 8px
     }
 
     .authors-row {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 10px;
+      gap: 10px
     }
 
     .author-chip {
@@ -91,26 +90,26 @@
       align-items: center;
       gap: 6px;
       padding: 0 2px;
-      font-size: 1.12rem;
+      font-size: 1.12rem
     }
 
     .author-chip a {
       color: #2563eb;
       text-decoration: none;
-      font-weight: 600;
+      font-weight: 600
     }
 
     .author-chip a:hover {
-      text-decoration: underline;
+      text-decoration: underline
     }
 
     .author-chip sup {
       font-size: .7em;
-      color: #6b7280;
+      color: #6b7280
     }
 
     .seal {
-      margin-top: 18px;
+      margin-top: 18px
     }
 
     .seal img {
@@ -118,7 +117,7 @@
       height: auto;
       display: block;
       margin: 0 auto;
-      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, .08));
+      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, .08))
     }
 
     .cta {
@@ -127,7 +126,7 @@
       flex-wrap: wrap;
       gap: 16px;
       margin-top: 18px;
-      margin-bottom: 28px;
+      margin-bottom: 28px
     }
 
     .btn {
@@ -142,17 +141,17 @@
       font-weight: 600;
       text-decoration: none;
       box-shadow: 0 2px 10px rgba(0, 0, 0, .12);
-      transition: transform .15s ease, box-shadow .15s ease, background-color .15s ease;
+      transition: transform .15s ease, box-shadow .15s ease, background-color .15s ease
     }
 
     .btn.secondary {
       background: #fff;
-      color: var(--fg);
+      color: var(--fg)
     }
 
     .btn:hover {
       transform: translateY(-1px);
-      box-shadow: 0 6px 16px rgba(0, 0, 0, .12);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, .12)
     }
 
     .summary-box {
@@ -164,52 +163,43 @@
       display: flex;
       align-items: flex-start;
       gap: 10px;
-      box-shadow: var(--shadow);
+      box-shadow: var(--shadow)
     }
 
     .summary-text {
-      flex: 1;
+      flex: 1
     }
 
     section {
       margin: 56px auto;
-      max-width: var(--maxw);
+      max-width: var(--maxw)
     }
 
     section h2 {
       font-size: clamp(26px, 3.4vw, 36px);
-      margin: 0 0 12px;
+      margin: 0 0 12px
     }
 
-    /* ------- Carded <figure> (unified) ------- */
+    /* --------- Generic carded figure (kept for non-problem media) --------- */
     figure.card {
       position: relative;
       margin: 0;
-      /* control margins inline if needed */
       padding: var(--fig-pad);
       background: #fff;
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       overflow: hidden;
-      /* clip children to the rounded card */
-      line-height: normal;
+      line-height: normal
     }
 
-    /* Inner media wrapper: inherits radius, no fake borders */
     .media {
       position: relative;
       border-radius: inherit;
       overflow: hidden;
       isolation: isolate;
-      background: #fff;
-      /* IMPORTANT: remove the previous fake border that created a square edge */
-      box-shadow: none !important;
-      /* Helps WebKit/Skia keep corners crisp with scaling */
-      -webkit-mask-image: radial-gradient(#000 98%, transparent 101%);
-      mask-image: radial-gradient(#000 98%, transparent 101%);
+      background: #fff
     }
 
-    /* Actual media */
     .media>img,
     .media>video,
     .media>canvas {
@@ -219,16 +209,64 @@
       border: 0;
       outline: 0;
       border-radius: inherit;
-      /* propagate radius to bitmap edges */
-      /* Overdraw 1px to kill AA seams without reintroducing a visible border */
       transform: translateZ(0);
+      backface-visibility: hidden
     }
 
-    /* Simple “edge-bleed-x” utility for teaser/pipeline videos that should touch card edges */
     .bleed-x {
       width: calc(100% + (var(--fig-pad)*2));
       margin-left: calc(-1*var(--fig-pad));
-      margin-right: calc(-1*var(--fig-pad));
+      margin-right: calc(-1*var(--fig-pad))
+    }
+
+    /* --------- Bullet-proof split card for Safari compositor issues --------- */
+    .card--split {
+      position: relative;
+      margin: 0;
+      background: transparent;
+      box-shadow: none;
+      border-radius: 0;
+      overflow: visible
+    }
+
+    .card--split .card-underlay {
+      position: absolute;
+      inset: 0;
+      border-radius: var(--radius);
+      background: #fff;
+      box-shadow: var(--shadow);
+      pointer-events: none;
+      z-index: 0
+    }
+
+    .card--split .card-frame {
+      position: relative;
+      z-index: 1;
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: #fff;
+      padding: var(--fig-pad)
+    }
+
+    .card--split .card-frame>img,
+    .card--split .card-frame>video,
+    .card--split .card-frame>canvas {
+      display: block;
+      width: 100%;
+      height: auto;
+      border: 0;
+      outline: 0;
+      border-radius: inherit;
+      /* extra clamps for WebKit/Skia */
+      clip-path: inset(0 round var(--radius));
+      transform: translateZ(0);
+      backface-visibility: hidden;
+      will-change: clip-path
+    }
+
+    /* (Optional) if you ever apply transforms to ancestors, keep shadow intact */
+    .card--split {
+      transform: translateZ(0)
     }
 
     /* Paper section */
@@ -236,7 +274,7 @@
       display: flex;
       gap: 20px;
       align-items: flex-start;
-      flex-wrap: wrap;
+      flex-wrap: wrap
     }
 
     .paper-thumbnail {
@@ -244,14 +282,14 @@
       flex: 0 0 30%;
       max-width: 380px;
       display: block;
-      padding: 0 46px 0 0;
+      padding: 0 46px 0 0
     }
 
     .paper-info {
       flex: 1 1 0;
       min-width: 0;
       display: block;
-      text-align: left;
+      text-align: left
     }
 
     .layered-paper-big {
@@ -269,7 +307,7 @@
     footer {
       text-align: center;
       color: var(--muted);
-      margin-top: 36px;
+      margin-top: 36px
     }
   </style>
 </head>
@@ -282,7 +320,6 @@
           <span class="tline">X-Diffusion: Training Diffusion Policies on</span>
           <span class="tline">Cross-Embodiment Human Demonstrations</span>
         </h1>
-
         <div class="authors-group">
           <div class="authors-row">
             <span class="author-chip"><a href="https://www.maximusace.com/" target="_blank" rel="noopener">Maximus A.
@@ -303,7 +340,6 @@
                 Kedia</a><sup>†</sup></span>
           </div>
         </div>
-
         <div class="seal"><img src="cornell-seal.jpg" alt="Cornell University" /></div>
       </div>
 
@@ -318,7 +354,7 @@
     </header>
 
     <!-- Intro video -->
-    <div class="teaser" style="width:100%; margin-bottom:0;">
+    <div class="teaser" style="width:100%;margin-bottom:0;">
       <figure class="card">
         <div class="summary-text" style="margin:0 0 16px 0;font-weight:800;font-size:1.35rem;letter-spacing:.1px;">
           X-Diffusion selectively incorporates noised human actions into Diffusion Policy training
@@ -345,8 +381,7 @@
     <section id="Noise">
       <h2>Adding Noise Makes Human and Robot Actions Indistinguishable</h2>
       <div style="width:100%;display:flex;flex-direction:column;gap:16px;align-items:stretch;">
-        <iframe id="noise-demo-pp" src="./noise_demo.html?task=push_plate&frameId=noise-demo-pp" width="100%"
-          height="820"
+        <iframe id="noise-demo-pp" src="./noise_demo.html?task=teaser&frameId=noise-demo-pp" width="100%" height="820"
           style="border:0;display:block;border-radius:12px;box-shadow:var(--shadow);border:1px solid #e5e7eb;background:#fff;overflow:hidden;padding:20px;">
         </iframe>
         <!-- <iframe id="noise-demo-se" ... ></iframe> -->
@@ -391,11 +426,10 @@
       baselines <strong>across all tasks</strong>, which see either <strong>small performance gains</strong> or
       <strong>degraded performance</strong> when using all human data.
 
-      <!-- This is the one that previously showed the squared image cutting the rounded shadow.
-           The media wrapper + border-radius:inherit fixes it. -->
-      <figure class="card" style="margin:0 0 18px 0;">
+      <!-- PROBLEM IMAGE — use split card to force correct compositing in Safari -->
+      <figure class="card">
         <div class="media">
-          <img src="media/fig4.png" alt="Task-wise success vs. baselines" />
+          <img src="media/fig4.png" alt="Naive vs X-Diffusion" />
         </div>
       </figure>
     </section>
@@ -435,28 +469,19 @@
   </div>
 
   <script>
-    // Sticky mini-nav visibility after hero (kept in case you re-enable the mini-nav)
+    // Sticky mini-nav visibility after hero (kept if you re-enable mini-nav)
     (function () {
-      const hero = document.querySelector('.hero');
-      const nav = document.querySelector('.mini-nav');
+      const hero = document.querySelector('.hero'); const nav = document.querySelector('.mini-nav');
       if (!hero || !nav) return;
-      function toggle() {
-        const threshold = hero.offsetHeight - 20;
-        const y = window.scrollY || document.documentElement.scrollTop;
-        if (y > threshold) nav.classList.add('show'); else nav.classList.remove('show');
-      }
-      window.addEventListener('scroll', toggle, { passive: true });
-      window.addEventListener('resize', toggle);
-      toggle();
+      function toggle() { const threshold = hero.offsetHeight - 20; const y = window.scrollY || document.documentElement.scrollTop; if (y > threshold) nav.classList.add('show'); else nav.classList.remove('show'); }
+      window.addEventListener('scroll', toggle, { passive: true }); window.addEventListener('resize', toggle); toggle();
     })();
 
     // Auto-resize the noise demo iframe
     window.addEventListener('message', (event) => {
       if (event.data && event.data.id === 'noise-demo' && event.data.frameId) {
         const iframe = document.getElementById(event.data.frameId);
-        if (iframe && typeof event.data.height === 'number') {
-          iframe.style.height = event.data.height + 'px';
-        }
+        if (iframe && typeof event.data.height === 'number') { iframe.style.height = event.data.height + 'px'; }
       }
     });
   </script>
