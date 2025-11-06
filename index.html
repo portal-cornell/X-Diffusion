@@ -197,7 +197,7 @@
       border-radius: inherit;
       overflow: hidden;
       isolation: isolate;
-      background: #fff
+      /* background: #fff */
     }
 
     .media>img,
@@ -415,11 +415,14 @@
           task</strong>.
       </p>
 
-      <figure class="card">
-        <div class="media">
-          <img src="media/baselines.png" alt="Naive vs X-Diffusion" />
-        </div>
-      </figure>
+      <div class="teaser" style="width:100%;margin-bottom:0;">
+        <figure class="card">
+          <div class="media">
+            <video class="bleed-x" src="media/Baseline_video.mov" alt="Pipeline" muted loop playsinline
+              autoplay></video>
+          </div>
+        </figure>
+      </div>
 
       <h3>2) X-Diffusion outperforms prior cross-embodiment learning baselines</h3>
       We demonstrate empirically that <strong>X-Diffusion</strong> outperforms other cross-embodiment learning
